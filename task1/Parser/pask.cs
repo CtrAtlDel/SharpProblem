@@ -1,0 +1,6 @@
+﻿namespace Parser
+{
+    class Pask
+    {
+    }
+}
