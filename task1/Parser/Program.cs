@@ -16,7 +16,7 @@ namespace Parser
             int res = sumWords(path);
             int sumLines = sumLine(path, 0);
             int sumwords = sumWordInString(path);
-            Console.WriteLine($"Sum of words in file: {sumwords}");
+            Console.WriteLine($"Sum of words in file: {res}");
             Console.WriteLine($"Sum words in first string:  {sumwords} ");
             Console.WriteLine($"Sum of line:  {sumLines}");
         }
