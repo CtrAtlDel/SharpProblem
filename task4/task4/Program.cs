@@ -7,13 +7,7 @@ namespace task4
     {
         static void Main(string[] args)
         {
-            int[,] array = new int[10, 10];
-            var threads = Enumerable.Range(0, 10);
-            foreach (var VARIABLE in threads)
-            {
-                Console.WriteLine($"{VARIABLE}");
-            }
-            Console.Write($"{array.Length}");
+            
         }
     }
 }
