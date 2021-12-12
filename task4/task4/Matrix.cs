@@ -75,6 +75,19 @@ namespace task4
 
         public static void Input(Matrix matrix)
         {
+            //
+        }
+
+        public static void MatrixSum(Matrix left, Matrix right, Matrix result)
+        {
+            Parallel.ForEach(Enumerable.Range(0, left.size),
+                i =>
+                {
+                    var x = i / left.size;
+                    var y = i % right.size;
+                    result.data[x, y] = left.data[x, y] + right.data[x, y];
+                }
+            );
         }
 
         public static void PrintMatrix(Matrix matrix)
