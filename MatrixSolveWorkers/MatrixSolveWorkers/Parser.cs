@@ -13,32 +13,21 @@ public class Parser
     public void ReadCsv(string path, string path2)
     {
         path = path2;
+        
         using (TextFieldParser parser = new TextFieldParser(path))
         {
             parser.TextFieldType = FieldType.Delimited;
             parser.SetDelimiters(",");
             while (!parser.EndOfData)
             {
-                //Processing row
-                var testLine = parser.ReadLine();
-                string[] lines = parser.ReadFields();
-                Console.WriteLine($"{testLine}");
-                size = lines.Length; //количество элементов матрицы
-                sizeOfBuffer = GetBufferSize(size);
-                foreach (string field in lines)
-                {
-                    Console.WriteLine($"String: {field}");
-                }
+                var stringLine = parser.ReadLine();
+                Console.WriteLine($"String: {stringLine}");
             }
         }
     }
-
-    /// <summary>
-    /// Return int buffer with int numbers
-    /// </summary>
-    /// <param name="stringBuffer"></param>
-    /// <returns></returns>
+    
     public List<int> CreateBuffer(string stringBuffer)
+    
     {
         List<int> buffer = new List<int>();
         var arrayString = stringBuffer.Split(",");

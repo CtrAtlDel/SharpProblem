@@ -92,7 +92,7 @@ namespace task4
             {
                 for (int j = 0; j < matrix.size; j++)
                 {
-                    Console.Write($"{matrix.data[i, j]}");
+                    // Console.Write($"{matrix.data[i, j]}");
                 }
                 Console.WriteLine();
             }

@@ -9,6 +9,7 @@ public class Parser
 {
     public int size;
     public int sizeOfBuffer;
+
     public void ReadCsv(string path, string path2)
     {
         path = path2;
@@ -21,9 +22,7 @@ public class Parser
                 //Processing row
                 var testLine = parser.ReadLine();
                 string[] lines = parser.ReadFields();
-                // var testLine = parser.ReadLine();
                 Console.WriteLine($"{testLine}");
-                // parser.Re
                 size = lines.Length; //количество элементов матрицы
                 sizeOfBuffer = GetBufferSize(size);
                 foreach (string field in lines)
@@ -33,9 +32,9 @@ public class Parser
             }
         }
     }
-    
+
     /// <summary>
-    /// Return int buffer with int
+    /// Return int buffer with int numbers
     /// </summary>
     /// <param name="stringBuffer"></param>
     /// <returns></returns>
@@ -47,6 +46,7 @@ public class Parser
         {
             buffer.Add(Int32.Parse(arrayString[i]));
         }
+
         return buffer;
     }
 
@@ -58,8 +58,8 @@ public class Parser
             sizeMatrix <<= 1;
             pow++;
         }
+
         pow--;
         return pow;
     }
-    
 }

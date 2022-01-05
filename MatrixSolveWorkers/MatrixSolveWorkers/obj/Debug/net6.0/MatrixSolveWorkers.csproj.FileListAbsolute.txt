@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.dll
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/ref/MatrixSolveWorkers.dll
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.dll
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/ref/MatrixSolveWorkers.dll
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.genruntimeconfig.cache
