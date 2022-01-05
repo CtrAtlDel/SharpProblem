@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 public class Workers
 {
-    public static List<int> Multiplication(List<int> line, List<int> column) //reduce
+    public static List<int> Multiplication(List<int> line, List<int> column) // map
     {
         List<int> result = new List<int>();
         for (int i = 0; i < line.Count; i++)
@@ -13,7 +13,7 @@ public class Workers
         return result;
     }
 
-    public static int Sum(List<int> list)
+    public static int Sum(List<int> list) // reduce
     {
         return list.Sum();
     }

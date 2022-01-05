@@ -26,6 +26,8 @@ public class Parser
         }
     }
     
+    
+    
     public List<int> CreateBuffer(string stringBuffer)
     
     {
