@@ -9,9 +9,9 @@ public class Parser
 {
     public int size;
     public int sizeOfBuffer;
-    public int[] buffer;
     public void ReadCsv(string path, string path2)
     {
+        path = path2;
         using (TextFieldParser parser = new TextFieldParser(path))
         {
             parser.TextFieldType = FieldType.Delimited;
@@ -19,7 +19,10 @@ public class Parser
             while (!parser.EndOfData)
             {
                 //Processing row
+                var testLine = parser.ReadLine();
                 string[] lines = parser.ReadFields();
+                // var testLine = parser.ReadLine();
+                Console.WriteLine($"{testLine}");
                 // parser.Re
                 size = lines.Length; //количество элементов матрицы
                 sizeOfBuffer = GetBufferSize(size);
@@ -30,6 +33,22 @@ public class Parser
             }
         }
     }
+    
+    /// <summary>
+    /// Return int buffer with int
+    /// </summary>
+    /// <param name="stringBuffer"></param>
+    /// <returns></returns>
+    public List<int> CreateBuffer(string stringBuffer)
+    {
+        List<int> buffer = new List<int>();
+        var arrayString = stringBuffer.Split(",");
+        for (int i = 0; i < arrayString.Length; i++)
+        {
+            buffer.Add(Int32.Parse(arrayString[i]));
+        }
+        return buffer;
+    }
 
     public int GetBufferSize(int sizeMatrix)
     {
@@ -39,11 +58,8 @@ public class Parser
             sizeMatrix <<= 1;
             pow++;
         }
-
         pow--;
-
         return pow;
     }
-    
     
 }
