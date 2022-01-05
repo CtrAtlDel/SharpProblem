@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Xsl;
 
 namespace task4
 {
     public class Matrix
     {
-        private int size; // строка
+        private int size;
         private int[,] data;
 
         public Matrix(int size)
