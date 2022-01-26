@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 using MatrixSolve;
 
+//todo Ассинхронно считать строки и столбцы
+//todo Добавить запись результата матрицы в файл после опреации
+//todo Передать пары (i, j) в воркеры
+//todo собрать результаты
 
 
 string path1 = "/Users/ivankvasov/gitSharp/SharpProblem/MatrixSolveWorkers/MatrixSolveWorkers/Matrix.csv";

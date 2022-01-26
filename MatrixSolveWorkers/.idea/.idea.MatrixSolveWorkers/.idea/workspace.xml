@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b50950c-8912-4714-8534-3262539a0145" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../CourseProject/CourseProject.Worker/CourseProject.Worker.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MatrixSolveWorkers/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MatrixSolveWorkers/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/Parser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/Parser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/Workers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/Workers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.dll" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/bin/Debug/net6.0/MatrixSolveWorkers.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.dll" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/MatrixSolveWorkers/obj/Debug/net6.0/MatrixSolveWorkers.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -61,7 +67,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1641394705358</updated>
-      <workItem from="1641394709017" duration="4928000" />
+      <workItem from="1641394709017" duration="6711000" />
+      <workItem from="1641732507677" duration="1452000" />
+      <workItem from="1642895022941" duration="1919000" />
+      <workItem from="1643122807467" duration="257000" />
+      <workItem from="1643195319945" duration="84000" />
     </task>
     <servers />
   </component>
@@ -69,7 +79,7 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

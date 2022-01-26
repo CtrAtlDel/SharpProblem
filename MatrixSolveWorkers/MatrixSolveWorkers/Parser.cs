@@ -13,7 +13,7 @@ public class Parser
     public void ReadCsv(string path, string path2)
     {
         path = path2;
-        
+
         using (TextFieldParser parser = new TextFieldParser(path))
         {
             parser.TextFieldType = FieldType.Delimited;
@@ -25,11 +25,9 @@ public class Parser
             }
         }
     }
-    
-    
-    
+
     public List<int> CreateBuffer(string stringBuffer)
-    
+
     {
         List<int> buffer = new List<int>();
         var arrayString = stringBuffer.Split(",");
