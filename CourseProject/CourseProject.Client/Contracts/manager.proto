@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package mss.matrix;
+
+option csharp_namespace = "MatSumSys.Protobuf.Matrix";
+
+import "matrix.proto";
+
+service MatrixSumService {
+  rpc Sum(PairMatrix) returns (Matrix); 
+}
+

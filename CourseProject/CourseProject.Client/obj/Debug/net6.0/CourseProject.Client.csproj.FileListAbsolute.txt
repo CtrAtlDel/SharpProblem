@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/CourseProject.Client
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/CourseProject.Client.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/CourseProject.Client.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/CourseProject.Client.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/ref/CourseProject.Client.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/bin/Debug/net6.0/CourseProject.Client.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/ref/CourseProject.Client.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.Client/obj/Debug/net6.0/CourseProject.Client.genruntimeconfig.cache

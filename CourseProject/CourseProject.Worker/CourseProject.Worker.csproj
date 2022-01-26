@@ -5,7 +5,19 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>CourseProject</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Confluent.Kafka" Version="1.8.2" />
+      <PackageReference Include="Google.Protobuf" Version="3.19.3" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.42.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.42.0" />
+      <PackageReference Include="Grpc.Tools" Version="2.43.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Serilog" Version="2.11.0-dev-01380" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
+    </ItemGroup>
 
 </Project>

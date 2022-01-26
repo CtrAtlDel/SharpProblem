@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/CourseProject.ProtoHelper
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/CourseProject.ProtoHelper.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/CourseProject.ProtoHelper.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/CourseProject.ProtoHelper.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/ref/CourseProject.ProtoHelper.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/bin/Debug/net6.0/CourseProject.ProtoHelper.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/ref/CourseProject.ProtoHelper.dll
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/CourseProject/CourseProject.ProtoHelper/obj/Debug/net6.0/CourseProject.ProtoHelper.genruntimeconfig.cache
