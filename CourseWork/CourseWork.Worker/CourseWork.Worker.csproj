@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk" InitialTargets="Codegen">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>CourseWork.Worker</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CourseWork.ProtoHelpers\CourseWork.ProtoHelpers.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="2.11.0-dev-01380" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
+    </ItemGroup>
+
+    <Target Name="Codegen">
+        <Exec Command="mkdir -p Protobuf" />
+        <Exec Command="protoc --proto_path=../contracts --csharp_out=Protobuf ../contracts/matrix.proto" />
+        <Exec Command="protoc --proto_path=../contracts --csharp_out=Protobuf ../contracts/worker.proto" />
+    </Target>
+    
+</Project>

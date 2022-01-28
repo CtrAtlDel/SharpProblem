@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "QTF7kl8pHt9JUSJxNsaQkR//xE3yZ/l59gLnkztgt05ofYxHpeOQqillgxSEvLZ7k57P4P+bRcdjS5JhNSA0Ow==",
+  "success": true,
+  "projectFilePath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/CourseWork.Worker.csproj",
+  "expectedPackageFiles": [
+    "/Users/ivankvasov/.nuget/packages/confluent.kafka/1.8.2/confluent.kafka.1.8.2.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/google.protobuf/3.19.3/google.protobuf.3.19.3.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/librdkafka.redist/1.8.2/librdkafka.redist.1.8.2.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/serilog/2.11.0-dev-01380/serilog.2.11.0-dev-01380.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/serilog.sinks.console/4.0.2-dev-00890/serilog.sinks.console.4.0.2-dev-00890.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/system.memory/4.5.0/system.memory.4.5.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.ref/5.0.0/microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.host.osx-x64/5.0.13/microsoft.netcore.app.host.osx-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

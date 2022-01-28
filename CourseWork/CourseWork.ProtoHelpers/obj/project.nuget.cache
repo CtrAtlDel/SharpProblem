@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "mp6V+G0YEyQlfn0PKMtYMsU+2YDx+SSGM3cTYwNO5r51sZj2f1n+lXJDVrdN9r+bLrHba+aqzob8pBKwLOv+/Q==",
+  "success": true,
+  "projectFilePath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj",
+  "expectedPackageFiles": [
+    "/Users/ivankvasov/.nuget/packages/confluent.kafka/1.8.2/confluent.kafka.1.8.2.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/google.protobuf/3.19.3/google.protobuf.3.19.3.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/librdkafka.redist/1.8.2/librdkafka.redist.1.8.2.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/system.memory/4.5.0/system.memory.4.5.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.ref/5.0.0/microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

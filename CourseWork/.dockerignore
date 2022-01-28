@@ -1,0 +1,6 @@
+bin
+obj
+*.yml
+*.sh
+.idea
+kafka

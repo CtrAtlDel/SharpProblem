@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package mss.matrix;
+
+option csharp_namespace = "CourseWork.Protobuf.Matrix";
+
+message Matrix {
+  message Line {
+    repeated double columns = 1;
+  }
+  repeated Line lines = 1;
+  int32 dim_x = 2;
+  int32 dim_y = 3;
+}
+
+message PairMatrix {
+  Matrix left = 1;
+  Matrix right = 2;
+}

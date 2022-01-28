@@ -1,0 +1,160 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/CourseWork.Worker.csproj": {}
+  },
+  "projects": {
+    "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj",
+        "projectName": "CourseWork.ProtoHelpers",
+        "projectPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj",
+        "packagesPath": "/Users/ivankvasov/.nuget/packages/",
+        "outputPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/ivankvasov/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[1.8.2, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.19.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/CourseWork.Worker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/CourseWork.Worker.csproj",
+        "projectName": "CourseWork.Worker",
+        "projectPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/CourseWork.Worker.csproj",
+        "packagesPath": "/Users/ivankvasov/.nuget/packages/",
+        "outputPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Worker/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/ivankvasov/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj": {
+                "projectPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.ProtoHelpers/CourseWork.ProtoHelpers.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.11.0-dev-01380, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[4.0.2-dev-00890, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[5.0.13, 5.0.13]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

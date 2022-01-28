@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = MatSumSys.ProtoHelpers
+build_property.ProjectDir = /home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/

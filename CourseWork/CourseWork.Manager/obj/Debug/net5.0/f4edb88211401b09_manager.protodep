@@ -1,0 +1,3 @@
+obj/Debug/net5.0/Manager.cs \
+obj/Debug/net5.0/ManagerGrpc.cs: ../contracts/matrix.proto\
+ ../contracts/manager.proto

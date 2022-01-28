@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "w2F2r+0WjBOpw1GJW0zrupoouZ4uqUJXFF0Yy/UDhD0fw2Rz273iXA5XmLrVbs4pEBXD+7wA+mdsBrEl4ckzlw==",
+  "success": true,
+  "projectFilePath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Client/CourseWork.Client.csproj",
+  "expectedPackageFiles": [
+    "/Users/ivankvasov/.nuget/packages/google.protobuf/3.19.3/google.protobuf.3.19.3.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/grpc.core.api/2.42.0/grpc.core.api.2.42.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/grpc.net.client/2.42.0/grpc.net.client.2.42.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/grpc.net.common/2.42.0/grpc.net.common.2.42.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/grpc.tools/2.44.0-pre2/grpc.tools.2.44.0-pre2.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.extensions.logging.abstractions/3.0.3/microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.ref/5.0.0/microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.host.osx-x64/5.0.13/microsoft.netcore.app.host.osx-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

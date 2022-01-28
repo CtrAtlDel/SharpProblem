@@ -1,0 +1,48 @@
+﻿
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseWork.Worker", "CourseWork.Worker\CourseWork.Worker.csproj", "{2D6A473F-447D-4BA8-AF09-6E51D577B88D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka-mss", "kafka-mss", "{359406A8-15DC-459A-8971-AB4D9B6DFA44}"
+ProjectSection(SolutionItems) = preProject
+	kafka\docker-compose.yml = kafka\docker-compose.yml
+	kafka\init.sh = kafka\init.sh
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseWork.Manager", "CourseWork.Manager\CourseWork.Manager.csproj", "{53BB2355-5E6D-47D0-91BF-E40036C987F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contracts", "contracts", "{C0A001E0-F70C-4F0C-8F0F-3B6068D6CFF4}"
+ProjectSection(SolutionItems) = preProject
+	contracts\matrix.proto = contracts\matrix.proto
+	contracts\manager.proto = contracts\manager.proto
+	contracts\worker.proto = contracts\worker.proto
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseWork.ProtoHelpers", "CourseWork.ProtoHelpers\CourseWork.ProtoHelpers.csproj", "{29B4E4CE-F0F4-4B5E-B6C7-149E8C8414F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseWork.Client", "CourseWork.Client\CourseWork.Client.csproj", "{C05E570D-D67D-419F-8F4D-7E092F7C577D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D6A473F-447D-4BA8-AF09-6E51D577B88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6A473F-447D-4BA8-AF09-6E51D577B88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6A473F-447D-4BA8-AF09-6E51D577B88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6A473F-447D-4BA8-AF09-6E51D577B88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53BB2355-5E6D-47D0-91BF-E40036C987F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53BB2355-5E6D-47D0-91BF-E40036C987F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53BB2355-5E6D-47D0-91BF-E40036C987F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53BB2355-5E6D-47D0-91BF-E40036C987F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B4E4CE-F0F4-4B5E-B6C7-149E8C8414F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B4E4CE-F0F4-4B5E-B6C7-149E8C8414F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B4E4CE-F0F4-4B5E-B6C7-149E8C8414F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B4E4CE-F0F4-4B5E-B6C7-149E8C8414F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05E570D-D67D-419F-8F4D-7E092F7C577D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05E570D-D67D-419F-8F4D-7E092F7C577D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05E570D-D67D-419F-8F4D-7E092F7C577D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05E570D-D67D-419F-8F4D-7E092F7C577D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

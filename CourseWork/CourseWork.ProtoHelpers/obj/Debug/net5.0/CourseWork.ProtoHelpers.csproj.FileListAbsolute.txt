@@ -1,0 +1,12 @@
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/bin/Debug/net5.0/CourseWork.ProtoHelpers.deps.json
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/bin/Debug/net5.0/CourseWork.ProtoHelpers.dll
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/bin/Debug/net5.0/ref/CourseWork.ProtoHelpers.dll
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/bin/Debug/net5.0/CourseWork.ProtoHelpers.pdb
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.csproj.AssemblyReference.cache
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.GeneratedMSBuildEditorConfig.editorconfig
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.AssemblyInfoInputs.cache
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.AssemblyInfo.cs
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.csproj.CoreCompileInputs.cache
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.dll
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/ref/CourseWork.ProtoHelpers.dll
+/home/ashvetsova/RiderProjects/CourseWork/CourseWork.ProtoHelpers/obj/Debug/net5.0/CourseWork.ProtoHelpers.pdb

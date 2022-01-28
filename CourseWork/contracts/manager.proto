@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package mss.matrix;
+
+option csharp_namespace = "CourseWork.Protobuf.Matrix";
+
+import "matrix.proto";
+
+service MatrixMulService {
+  rpc Multiplication(PairMatrix) returns (Matrix); 
+}
+

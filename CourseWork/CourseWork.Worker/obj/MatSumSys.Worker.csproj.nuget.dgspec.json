@@ -1,0 +1,136 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.Worker/MatSumSys.Worker.csproj": {}
+  },
+  "projects": {
+    "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/MatSumSys.ProtoHelpers.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/MatSumSys.ProtoHelpers.csproj",
+        "projectName": "MatSumSys.ProtoHelpers",
+        "projectPath": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/MatSumSys.ProtoHelpers.csproj",
+        "packagesPath": "/home/ashvetsova/.nuget/packages/",
+        "outputPath": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ashvetsova/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[1.8.2, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.19.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.404/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.Worker/MatSumSys.Worker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.Worker/MatSumSys.Worker.csproj",
+        "projectName": "MatSumSys.Worker",
+        "projectPath": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.Worker/MatSumSys.Worker.csproj",
+        "packagesPath": "/home/ashvetsova/.nuget/packages/",
+        "outputPath": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.Worker/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ashvetsova/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/MatSumSys.ProtoHelpers.csproj": {
+                "projectPath": "/home/ashvetsova/Загрузки/mephi-parprog-2021-release-main-lessons-l11_distributed-practice-apps-MatSumSys/lessons/l11_distributed-practice/apps/MatSumSys/MatSumSys.ProtoHelpers/MatSumSys.ProtoHelpers.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.11.0-dev-01380, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[4.0.2-dev-00890, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.404/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
