@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hO99E/u8vCIJWyxK+aLb30HsEKDWK2PcVCDYXfpnBP4ybt95GgVPuXh/1oJf6JWk6cMqY0/Ua3QzVc2ftD7PcQ==",
+  "dgSpecHash": "rW3JLBhggeMhsm5T7xTBIB11ea1tSFI7/RMfVddhkNGvCtgXfKVe1uzxQaapv3BUnjuuQpXoCiC3JwhhahapnQ==",
   "success": true,
   "projectFilePath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Manager/CourseWork.Manager.csproj",
   "expectedPackageFiles": [
@@ -50,10 +50,7 @@
     "/Users/ivankvasov/.nuget/packages/system.text.encoding.extensions/4.0.11/system.text.encoding.extensions.4.0.11.nupkg.sha512",
     "/Users/ivankvasov/.nuget/packages/system.text.json/4.6.0/system.text.json.4.6.0.nupkg.sha512",
     "/Users/ivankvasov/.nuget/packages/system.threading.tasks/4.0.11/system.threading.tasks.4.0.11.nupkg.sha512",
-    "/Users/ivankvasov/.nuget/packages/system.threading.timer/4.0.1/system.threading.timer.4.0.1.nupkg.sha512",
-    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.ref/5.0.0/microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
-    "/Users/ivankvasov/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
-    "/Users/ivankvasov/.nuget/packages/microsoft.netcore.app.host.osx-x64/5.0.13/microsoft.netcore.app.host.osx-x64.5.0.13.nupkg.sha512"
+    "/Users/ivankvasov/.nuget/packages/system.threading.timer/4.0.1/system.threading.timer.4.0.1.nupkg.sha512"
   ],
   "logs": []
 }
