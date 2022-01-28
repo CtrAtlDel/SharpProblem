@@ -48,6 +48,8 @@ namespace CourseWork.Worker
 
             return result;
         }
+        
+        
 
         public static Matrix Sum(PairMatrix ms)
         {

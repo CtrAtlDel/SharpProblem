@@ -13,15 +13,9 @@
         "packagesPath": "/Users/ivankvasov/.nuget/packages/",
         "outputPath": "/Users/ivankvasov/gitSharp/SharpProblem/CourseWork/CourseWork.Client/obj/",
         "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/Users/ivankvasov/.nuget/NuGet/NuGet.Config"
-        ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
