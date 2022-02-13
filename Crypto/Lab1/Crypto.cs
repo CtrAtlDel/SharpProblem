@@ -31,17 +31,26 @@ public class Crypto
         }
         else
         {
-            throw new Exception("You mode is not declarated");
+            throw new Exception("You mode is  undeclarated");
         }
     }
 
     byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
     {
         // if this block is final use padding
-        if (true)
+        if (padding != Modes.PKS7 || padding != Modes.NON)
         {
-            //TODO check padding PKCS7 or NON
-            //TODO check flag 
+            throw new Exception("You padding is undeclarated");
+        }
+
+        if (data.Length != Const.SizeBytes)
+        {
+            throw new Exception("Data length is not 128 byte");
+        }
+
+        if (isFinalBLock) //use padding
+        {
+            
         }
 
         byte[] resultEncrypt = new byte[Const.SizeBytes];
@@ -65,7 +74,7 @@ public class Crypto
 
         using (Aes aes = new AesCryptoServiceProvider())
         {
-            aes.Mode = CipherMode.ECB; 
+            aes.Mode = CipherMode.ECB;
             using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.SizeBytes]))
             {
                 aesEncryptor.TransformBlock(data, 0, Const.SizeBytes, resultCipher, 0);
@@ -75,7 +84,14 @@ public class Crypto
         return resultCipher;
     }
 
-    
+    // byte[] Encrypt(byte[] data, byte[] iv = null)
+    // {
+    // }
+
+    // byte[] Decrypt(byte[] data, byte[] iv = null)
+    // {
+    // }
+
     byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
