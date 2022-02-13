@@ -7,7 +7,7 @@ namespace CryptoLab
 {
     public class Mode
     {
-        public const int size = 5;
+        public const int sizeModes = 5;
         public const string ECB = "ECB";
         public const string CBC = "CBC";
         public const string CFB = "CFB";
@@ -30,12 +30,12 @@ namespace CryptoLab
 
         void SetKey(byte[] key) //установка ключа шифрования\расшифрования
         {
-            if (key.Length != Const.sizeBytes)
+            if (key.Length == Const.sizeBytes)
             {
-                throw new Exception("Key size != 128 bytes");
+                this.key = key;
             }
 
-            this.key = key;
+            throw new Exception("Key size != 128 bytes");
         }
 
         void SetMode(string mode) //указание режима шифрования
