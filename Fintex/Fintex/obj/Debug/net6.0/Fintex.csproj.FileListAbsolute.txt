@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/Fintex
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/Fintex.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/Fintex.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/Fintex.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/ref/Fintex.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/bin/Debug/net6.0/Fintex.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/ref/Fintex.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Fintex/Fintex/obj/Debug/net6.0/Fintex.genruntimeconfig.cache
