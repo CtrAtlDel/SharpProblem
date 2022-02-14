@@ -12,6 +12,10 @@ public class Modes
     public const string CFB = "CFB";
     public const string OFB = "CFB";
     public const string CTR = "CTR";
+}
+
+public class Padding
+{
     public const string PKS7 = "PKS7";
     public const string NON = "NON";
 }
@@ -86,15 +90,15 @@ public class Crypto
 
     byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
     {
-        // if this block is final use padding
-        if (padding != Modes.PKS7 || padding != Modes.NON)
-            throw new Exception("You padding is undeclarated");
+        if (padding != Padding.PKS7 || padding != Padding.NON)
+            throw new Exception("You padding is not declared");
 
         if (data.Length != Const.Bytes)
             throw new Exception("Data length is not 128 byte");
+
         //TODO ProcessBlockDecrypt
-        byte[] resultEncrypt = new byte[Const.Bytes];
-        resultEncrypt = BlockCipherEncrypt(data);
+        byte[] resultEncrypt = BlockCipherEncrypt(data);
+
         return resultEncrypt;
     }
 
@@ -107,6 +111,7 @@ public class Crypto
     {
         if (this.key.Length == 0)
             throw new Exception("Key is null");
+
         byte[] blockCipherDecrypt = new byte[Const.Bytes];
 
         using (Aes aes = new AesCryptoServiceProvider())
@@ -124,9 +129,7 @@ public class Crypto
     byte[] BlockCipherEncrypt(byte[] data)
     {
         if (this.key.Length == 0)
-        {
             throw new Exception("Key is null");
-        }
 
         byte[] resultCipher = new byte[Const.Bytes];
 
