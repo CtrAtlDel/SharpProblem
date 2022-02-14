@@ -54,6 +54,7 @@ public class Crypto
         {
             //patting = NON
         }
+
         return null;
     }
 
@@ -66,23 +67,20 @@ public class Crypto
 
         if (this.mode == Modes.CTR)
         {
-            
         }
 
         if (this.mode == Modes.CBC)
         {
-            
         }
 
         if (this.mode == Modes.CFB)
         {
-            
         }
 
         if (this.mode == Modes.OFB)
         {
-            
         }
+
         return null;
     }
 
@@ -100,22 +98,27 @@ public class Crypto
         return resultEncrypt;
     }
 
-    string BlockCipherDecrypt(byte[] data)
+    byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBlock, string padding)
+    {
+        return null;
+    }
+
+    byte[] BlockCipherDecrypt(byte[] data)
     {
         if (this.key.Length == 0)
             throw new Exception("Key is null");
-        byte[] resultCipher = new byte[Const.Bytes];
+        byte[] blockCipherDecrypt = new byte[Const.Bytes];
 
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
             using (var aesDecryptor = aes.CreateDecryptor(this.key, new byte[Const.Bytes]))
             {
-                aesDecryptor.TransformBlock(data, 0, Const.Bytes, resultCipher, 0);
+                aesDecryptor.TransformBlock(data, 0, Const.Bytes, blockCipherDecrypt, 0);
             }
         }
-        
-        return ByteToMsg(resultCipher);
+
+        return blockCipherDecrypt;
     }
 
     byte[] BlockCipherEncrypt(byte[] data)
@@ -138,7 +141,7 @@ public class Crypto
 
         return resultCipher;
     }
-    
+
     void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
         if (key.Length == Const.Bytes)
@@ -162,13 +165,13 @@ public class Crypto
             throw new Exception("You mode is  undeclarated");
         }
     }
-    
-    byte[] MsgToByte(string msg) // translate string msg to byte[] msg
+
+    private byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
     }
 
-    string ByteToMsg(byte[] data)
+    private string ByteToMsg(byte[] data)
     {
         return BitConverter.ToString(data);
     }
