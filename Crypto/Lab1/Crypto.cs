@@ -11,14 +11,14 @@ public class Modes
     public const string CBC = "CBC";
     public const string CFB = "CFB";
     public const string OFB = "CFB";
-    public const string CT = "CT";
+    public const string CTR = "CTR";
     public const string PKS7 = "PKS7";
     public const string NON = "NON";
 }
 
 public class Const
 {
-    public const int SizeBytes = 128; // 128 bytes max
+    public const int Bytes = 128; // 128 bytes max
     public const int SizeMode = 5; // count of modes
 }
 
@@ -30,17 +30,118 @@ public class Crypto
 
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
+        if (this.mode == Modes.ECB)
+        {
+            // use without patting, default
+        }
+
+        if (this.mode == Modes.CTR)
+        {
+            // patting = NON
+        }
+
+        if (this.mode == Modes.CBC)
+        {
+            // patting = PKCS7
+        }
+
+        if (this.mode == Modes.CFB)
+        {
+            // patting = NON
+        }
+
+        if (this.mode == Modes.OFB)
+        {
+            //patting = NON
+        }
         return null;
     }
 
     byte[] Decrypt(byte[] data, byte[] iv = null)
     {
+        if (this.mode == Modes.ECB)
+        {
+            // 
+        }
+
+        if (this.mode == Modes.CTR)
+        {
+            
+        }
+
+        if (this.mode == Modes.CBC)
+        {
+            
+        }
+
+        if (this.mode == Modes.CFB)
+        {
+            
+        }
+
+        if (this.mode == Modes.OFB)
+        {
+            
+        }
         return null;
+    }
+
+    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
+    {
+        // if this block is final use padding
+        if (padding != Modes.PKS7 || padding != Modes.NON)
+            throw new Exception("You padding is undeclarated");
+
+        if (data.Length != Const.Bytes)
+            throw new Exception("Data length is not 128 byte");
+        //TODO ProcessBlockDecrypt
+        byte[] resultEncrypt = new byte[Const.Bytes];
+        resultEncrypt = BlockCipherEncrypt(data);
+        return resultEncrypt;
+    }
+
+    string BlockCipherDecrypt(byte[] data)
+    {
+        if (this.key.Length == 0)
+            throw new Exception("Key is null");
+        byte[] resultCipher = new byte[Const.Bytes];
+
+        using (Aes aes = new AesCryptoServiceProvider())
+        {
+            aes.Mode = CipherMode.ECB;
+            using (var aesDecryptor = aes.CreateDecryptor(this.key, new byte[Const.Bytes]))
+            {
+                aesDecryptor.TransformBlock(data, 0, Const.Bytes, resultCipher, 0);
+            }
+        }
+        
+        return ByteToMsg(resultCipher);
+    }
+
+    byte[] BlockCipherEncrypt(byte[] data)
+    {
+        if (this.key.Length == 0)
+        {
+            throw new Exception("Key is null");
+        }
+
+        byte[] resultCipher = new byte[Const.Bytes];
+
+        using (Aes aes = new AesCryptoServiceProvider())
+        {
+            aes.Mode = CipherMode.ECB;
+            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.Bytes]))
+            {
+                aesEncryptor.TransformBlock(data, 0, Const.Bytes, resultCipher, 0);
+            }
+        }
+
+        return resultCipher;
     }
     
     void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
-        if (key.Length == Const.SizeBytes)
+        if (key.Length == Const.Bytes)
         {
             this.key = key;
         }
@@ -52,7 +153,7 @@ public class Crypto
 
     void SetMode(string mode) //указание режима шифрования
     {
-        if (mode == Modes.CT || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
+        if (mode == Modes.CTR || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
         {
             this.mode = mode;
         }
@@ -61,56 +162,7 @@ public class Crypto
             throw new Exception("You mode is  undeclarated");
         }
     }
-
-    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
-    {
-        // if this block is final use padding
-        if (padding != Modes.PKS7 || padding != Modes.NON)
-        {
-            throw new Exception("You padding is undeclarated");
-        }
-
-        if (data.Length != Const.SizeBytes)
-        {
-            throw new Exception("Data length is not 128 byte");
-        }
-
-        if (isFinalBLock) //use padding
-        {
-            
-        }
-
-        byte[] resultEncrypt = new byte[Const.SizeBytes];
-        resultEncrypt = BlockCipherEncrypt(data);
-        return resultEncrypt;
-    }
-
-    byte[] BlockCipherEncrypt(byte[] data)
-    {
-        if (this.key.Length == 0)
-        {
-            throw new Exception("Key is null");
-        }
-
-        if (data.Length != key.Length)
-        {
-            throw new Exception("Data length not equal key length");
-        }
-
-        byte[] resultCipher = new byte[Const.SizeBytes];
-
-        using (Aes aes = new AesCryptoServiceProvider())
-        {
-            aes.Mode = CipherMode.ECB;
-            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.SizeBytes]))
-            {
-                aesEncryptor.TransformBlock(data, 0, Const.SizeBytes, resultCipher, 0);
-            }
-        }
-
-        return resultCipher;
-    }
-
+    
     byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
