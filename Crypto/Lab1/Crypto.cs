@@ -1,4 +1,5 @@
 using System.Data;
+using System.Dynamic;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,21 +23,26 @@ public class Padding
 
 public class Const
 {
-    public const int Bytes = 128; // 128 bytes max
+    public const int AesKeySize = 128; // 128 bytes max AES key
+    public const int AesMsgSize = 256;
+    public const int AesMsgSize64 = 64;
+    public const int AesMsgSize128 = 128;
+    public const int AesMsgSize256 = 256;
     public const int SizeMode = 5; // count of modes
 }
 
 public class Crypto
 {
-    private byte[] key;
+    private byte[] key = null;
 
     private string mode = Modes.ECB; //CT CBC CFB ECB OFB
 
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
+
         if (this.mode == Modes.ECB)
         {
-            return ProcessBlockEncrypt(data, true, Padding.NON);
+            
         }
 
         if (this.mode == Modes.CTR)
@@ -60,6 +66,34 @@ public class Crypto
         }
 
         return null;
+    }
+
+    byte[] EncryptECB(byte[] data)
+    {
+        var spanData = new Span<byte>(data);
+        byte[] result = Array.Empty<byte>();
+        for (int i = 0; i < CountOfBlocks(data.Length); i++) // -> to alone metode
+        {
+            if (i == CountOfBlocks(data.Length) - 1) // get a part of 
+            {
+                var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
+                result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON)); // null?
+            }
+            var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
+                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); // null?
+        }
+
+        return result;
+    }
+
+    static int CountOfBlocks(int size)
+    {
+        if (size % Const.AesMsgSize == 0)
+        {
+            return size / Const.AesMsgSize;
+        }
+
+        return size / Const.AesMsgSize + 1;
     }
 
     byte[] Decrypt(byte[] data, byte[] iv = null)
@@ -93,11 +127,17 @@ public class Crypto
         if (padding != Padding.PKS7 || padding != Padding.NON)
             throw new Exception("You padding is not declared");
 
-        if (data.Length != Const.Bytes)
+        if (data.Length != Const.AesKeySize)
             throw new Exception("Data length is not 128 byte");
 
-        //TODO ProcessBlockDecrypt
         byte[] resultEncrypt = BlockCipherEncrypt(data);
+
+        //TODO ProcessBlockDecrypt
+
+        if (isFinalBLock)
+        {
+            //use padding for our key
+        }
 
         return resultEncrypt;
     }
@@ -112,14 +152,14 @@ public class Crypto
         if (this.key.Length == 0)
             throw new Exception("Key is null");
 
-        byte[] blockCipherDecrypt = new byte[Const.Bytes];
+        byte[] blockCipherDecrypt = new byte[Const.AesKeySize];
 
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
-            using (var aesDecryptor = aes.CreateDecryptor(this.key, new byte[Const.Bytes]))
+            using (var aesDecryptor = aes.CreateDecryptor(this.key, new byte[Const.AesKeySize]))
             {
-                aesDecryptor.TransformBlock(data, 0, Const.Bytes, blockCipherDecrypt, 0);
+                aesDecryptor.TransformBlock(data, 0, Const.AesKeySize, blockCipherDecrypt, 0);
             }
         }
 
@@ -131,14 +171,14 @@ public class Crypto
         if (this.key.Length == 0)
             throw new Exception("Key is null");
 
-        byte[] resultCipher = new byte[Const.Bytes];
+        byte[] resultCipher = new byte[Const.AesKeySize];
 
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
-            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.Bytes]))
+            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.AesKeySize]))
             {
-                aesEncryptor.TransformBlock(data, 0, Const.Bytes, resultCipher, 0);
+                aesEncryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
             }
         }
 
@@ -147,7 +187,7 @@ public class Crypto
 
     void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
-        if (key.Length == Const.Bytes)
+        if (key.Length == Const.AesKeySize)
         {
             this.key = key;
         }
