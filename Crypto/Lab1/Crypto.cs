@@ -42,7 +42,7 @@ public class Crypto
         if (this.mode == Modes.ECB)
             return EncryptECB(data);
 
-            if (this.mode == Modes.CTR)
+        if (this.mode == Modes.CTR)
         {
             //use IV vector
         }
@@ -69,9 +69,9 @@ public class Crypto
     {
         var spanData = new Span<byte>(data);
         byte[] result = Array.Empty<byte>();
-        for (int i = 0; i < CountOfBlocks(data.Length); i++) // -> to alone metode
+        for (int i = 0; i < CountOfBlocks(data.Length); i++) 
         {
-            if (!isEndOfArray(data, i)) // get a part of 
+            if (!isEndOfArray(data, i)) // get a part of data
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
                 result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); 
@@ -140,12 +140,11 @@ public class Crypto
             throw new Exception("Data length is not 128 byte");
 
         byte[] resultEncrypt = BlockCipherEncrypt(data);
-
-        //TODO ProcessBlockDecrypt
-
+        
         if (isFinalBLock)
         {
-            //use padding for our key
+            //use padding for our data
+            //TODO add if with padding
         }
 
         return resultEncrypt;
