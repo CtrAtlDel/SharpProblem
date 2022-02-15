@@ -37,6 +37,8 @@ public class Crypto
 
     private string mode = Modes.ECB; //CT CBC CFB ECB OFB
 
+    private byte[] IV = null;
+
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
         if (this.mode == Modes.ECB)
@@ -69,15 +71,15 @@ public class Crypto
     {
         var spanData = new Span<byte>(data);
         byte[] result = Array.Empty<byte>();
-        for (int i = 0; i < CountOfBlocks(data.Length); i++) 
+        for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (!isEndOfArray(data, i)) // get a part of data
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); 
+                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
                 continue;
             }
-            // if is end
+
             var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
             result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
         }
@@ -85,12 +87,46 @@ public class Crypto
         return result;
     }
 
+    byte[] EncryptCBC(byte[] data, byte[] iv)
+    {
+        var spanData = new Span<byte>(data);
+        byte[] result = Array.Empty<byte>();
+        if (iv == null || iv.Length == 0)
+        {
+            GenerateIV();
+            iv = this.IV;
+        }
+
+        //TODO CBC encrtypt
+        return result;
+    }
+
+    byte[] XorBytes(byte[] first, byte[] second)
+    {
+        if (first.Length != second.Length)
+            throw new Exception("Can't do XOR, different length");
+        byte[] result = new byte[first.Length];
+        for (int i = 0; i < first.Length; i++)
+        {
+            result[i] = (byte) (first[i] ^ second[i]);
+        }
+
+        return result;
+    }
+
+    void GenerateIV() // sizeIV = sizeDataBlock
+    {
+        using (var myRj = new RijndaelManaged())
+        {
+            myRj.GenerateIV();
+            this.IV = myRj.IV;
+        }
+    }
+
     bool isEndOfArray(byte[] data, int index)
     {
         if (index == CountOfBlocks(data.Length) - 1)
-        {
             return true;
-        }
 
         return false;
     }
@@ -140,7 +176,7 @@ public class Crypto
             throw new Exception("Data length is not 128 byte");
 
         byte[] resultEncrypt = BlockCipherEncrypt(data);
-        
+
         if (isFinalBLock)
         {
             //use padding for our data
