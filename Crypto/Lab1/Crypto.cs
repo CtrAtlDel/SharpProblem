@@ -39,13 +39,10 @@ public class Crypto
 
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
-
         if (this.mode == Modes.ECB)
-        {
-            
-        }
+            return EncryptECB(data);
 
-        if (this.mode == Modes.CTR)
+            if (this.mode == Modes.CTR)
         {
             //use IV vector
         }
@@ -74,16 +71,28 @@ public class Crypto
         byte[] result = Array.Empty<byte>();
         for (int i = 0; i < CountOfBlocks(data.Length); i++) // -> to alone metode
         {
-            if (i == CountOfBlocks(data.Length) - 1) // get a part of 
+            if (!isEndOfArray(data, i)) // get a part of 
             {
-                var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-                result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON)); // null?
+                var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
+                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); 
+                continue;
             }
-            var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); // null?
+            // if is end
+            var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
+            result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
         }
 
         return result;
+    }
+
+    bool isEndOfArray(byte[] data, int index)
+    {
+        if (index == CountOfBlocks(data.Length) - 1)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     static int CountOfBlocks(int size)
