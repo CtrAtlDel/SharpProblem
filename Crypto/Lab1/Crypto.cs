@@ -36,12 +36,12 @@ public class Crypto
     {
         if (this.mode == Modes.ECB)
         {
-            // use without patting, default
+            return ProcessBlockEncrypt(data, true, Padding.NON);
         }
 
         if (this.mode == Modes.CTR)
         {
-            // patting = NON
+            //use IV vector
         }
 
         if (this.mode == Modes.CBC)
