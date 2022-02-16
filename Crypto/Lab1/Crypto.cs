@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.VisualBasic;
 
 namespace CryptoLab;
 
@@ -67,21 +68,19 @@ public class Crypto
     byte[] EncryptECB(byte[] data)
     {
         var spanData = new Span<byte>(data);
-        List<byte> result = new List<byte>();
-        
+        var result = new List<byte>();
+
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (!isEndOfArray(data, i)) // get a part of data
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
                 result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
-                // result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); //так не работает 
                 continue;
             }
 
             var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
             result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
-            // result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON)); //так не работает
         }
 
         return result.ToArray();
@@ -89,17 +88,38 @@ public class Crypto
 
     byte[] EncryptCBC(byte[] data, byte[] iv)
     {
+        //TODO maybe throw some exception
         var spanData = new Span<byte>(data);
-        byte[] result = Array.Empty<byte>();
-        if (iv == null || iv.Length == 0)
+        var result = new List<byte>();
+        
+        if (iv == null || iv.Length == 0) //???
         {
             GenerateIV();
             iv = this.IV;
         }
+        else
+            this.IV = iv;
+        //TODO point
+        // result.AddRange(firstCBCEncrypt());
+        
+        for (int i = 1; i < CountOfBlocks(data.Length); i++)
+        {
+            if (!isEndOfArray(data, i))
+            {
+                var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
+                
+            }
+            else
+            {
+                
+            }
+        }
+        return result.ToArray();
+    }
 
-        //TODO CBC encrtypt
-
-        return result;
+    byte[] firstCBCEncrypt(byte[] data, byte[] IV)
+    {
+        return XorBytes(data, IV);
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
