@@ -10,8 +10,6 @@ namespace CryptoLab
     {
         public static void Main(string[] args)
         {
-            var provider = new AesCryptoServiceProvider();
-            byte[] trt = provider.IV;
             
         }
     }

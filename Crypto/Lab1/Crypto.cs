@@ -114,9 +114,10 @@ public class Crypto
         return result;
     }
 
-    void GenerateIV() // sizeIV = sizeDataBlock
+    void GenerateIV() // sizeIV = sizeDataBlock it is 
     {
-        using (var myRj = new RijndaelManaged())
+        //TODO ask about size IV
+        using (var myRj = new AesCryptoServiceProvider())
         {
             myRj.GenerateIV();
             this.IV = myRj.IV;
