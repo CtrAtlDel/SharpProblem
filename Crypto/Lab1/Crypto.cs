@@ -67,21 +67,24 @@ public class Crypto
     byte[] EncryptECB(byte[] data)
     {
         var spanData = new Span<byte>(data);
-        byte[] result = Array.Empty<byte>();
+        List<byte> result = new List<byte>();
+        
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (!isEndOfArray(data, i)) // get a part of data
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
+                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
+                // result.Concat(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON)); //так не работает 
                 continue;
             }
 
             var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-            result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
+            result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
+            // result.Concat(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON)); //так не работает
         }
 
-        return result;
+        return result.ToArray();
     }
 
     byte[] EncryptCBC(byte[] data, byte[] iv)
@@ -156,7 +159,7 @@ public class Crypto
 
         return resultEncrypt;
     }
-    
+
     byte[] BlockCipherEncrypt(byte[] data)
     {
         if (this.key.Length == 0)
@@ -175,6 +178,7 @@ public class Crypto
 
         return resultCipher;
     }
+
     byte[] Decrypt(byte[] data, byte[] iv = null)
     {
         if (this.mode == Modes.ECB)
