@@ -24,10 +24,7 @@ public class Padding
 public class Const
 {
     public const int AesKeySize = 128; // 128 bytes max AES key
-    public const int AesMsgSize = 256;
-    public const int AesMsgSize64 = 64;
-    public const int AesMsgSize128 = 128;
-    public const int AesMsgSize256 = 256;
+    public const int AesMsgSize = 16;
     public const int SizeMode = 5; // count of modes
 }
 
@@ -98,6 +95,7 @@ public class Crypto
         }
 
         //TODO CBC encrtypt
+
         return result;
     }
 
@@ -132,16 +130,51 @@ public class Crypto
         return false;
     }
 
-    static int CountOfBlocks(int size)
+    static int CountOfBlocks(int lenghtData)
     {
-        if (size % Const.AesMsgSize == 0)
-        {
-            return size / Const.AesMsgSize;
-        }
-
-        return size / Const.AesMsgSize + 1;
+        if (lenghtData % Const.AesMsgSize == 0)
+            return lenghtData / Const.AesMsgSize;
+        return lenghtData / Const.AesMsgSize + 1;
     }
 
+
+    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
+    {
+        if (padding != Padding.PKS7 || padding != Padding.NON)
+            throw new Exception("You padding is not declared");
+
+        if (data.Length != Const.AesKeySize)
+            throw new Exception("Data length is not 128 byte");
+
+        byte[] resultEncrypt = BlockCipherEncrypt(data);
+
+        if (isFinalBLock)
+        {
+            //use padding for our data
+            //TODO add if with padding
+        }
+
+        return resultEncrypt;
+    }
+    
+    byte[] BlockCipherEncrypt(byte[] data)
+    {
+        if (this.key.Length == 0)
+            throw new Exception("Key is null");
+
+        byte[] resultCipher = new byte[Const.AesKeySize];
+
+        using (Aes aes = new AesCryptoServiceProvider())
+        {
+            aes.Mode = CipherMode.ECB;
+            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.AesKeySize]))
+            {
+                aesEncryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
+            }
+        }
+
+        return resultCipher;
+    }
     byte[] Decrypt(byte[] data, byte[] iv = null)
     {
         if (this.mode == Modes.ECB)
@@ -168,25 +201,6 @@ public class Crypto
         return null;
     }
 
-    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
-    {
-        if (padding != Padding.PKS7 || padding != Padding.NON)
-            throw new Exception("You padding is not declared");
-
-        if (data.Length != Const.AesKeySize)
-            throw new Exception("Data length is not 128 byte");
-
-        byte[] resultEncrypt = BlockCipherEncrypt(data);
-
-        if (isFinalBLock)
-        {
-            //use padding for our data
-            //TODO add if with padding
-        }
-
-        return resultEncrypt;
-    }
-
     byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBlock, string padding)
     {
         return null;
@@ -209,25 +223,6 @@ public class Crypto
         }
 
         return blockCipherDecrypt;
-    }
-
-    byte[] BlockCipherEncrypt(byte[] data)
-    {
-        if (this.key.Length == 0)
-            throw new Exception("Key is null");
-
-        byte[] resultCipher = new byte[Const.AesKeySize];
-
-        using (Aes aes = new AesCryptoServiceProvider())
-        {
-            aes.Mode = CipherMode.ECB;
-            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.AesKeySize]))
-            {
-                aesEncryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
-            }
-        }
-
-        return resultCipher;
     }
 
     void SetKey(byte[] key) //установка ключа шифрования\расшифрования
