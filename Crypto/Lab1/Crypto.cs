@@ -100,18 +100,18 @@ public class Crypto
         else
             this.IV = iv;
         //TODO point
-        // result.AddRange(firstCBCEncrypt());
-        
-        for (int i = 1; i < CountOfBlocks(data.Length); i++)
+
+        for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (!isEndOfArray(data, i))
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                
+                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
             }
             else
             {
-                
+                var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
+                result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
             }
         }
         return result.ToArray();
