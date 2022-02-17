@@ -86,9 +86,7 @@ public class Crypto
     {
         //TODO maybe throw some exception
         if (data.Length == 0)
-        {
             throw new Exception("Empty data array");
-        }
 
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
@@ -109,30 +107,40 @@ public class Crypto
             return result.ToArray();
         }
 
-        result.AddRange(ProcessBlockEncrypt(firstBlock, false, Padding.PKS7));
+        var cipherText = ProcessBlockEncrypt(firstBlock, false, Padding.PKS7);
+        result.AddRange(cipherText);
+        
         for (int i = 1; i < CountOfBlocks(data.Length); i++)
         {
             if (isEndOfArray(data, i))
             {
                 var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
+                var tmpData = ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7);
+                result.AddRange(cipherText);
+                return result.ToArray();
             }
 
-            var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
+            var plainText = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
+            var xorData = XorBytes(plainText.ToArray(),cipherText);
+            cipherText = ProcessBlockEncrypt(xorData, false, Padding.PKS7);
+            result.AddRange(cipherText);
         }
 
         return result.ToArray();
     }
 
-    byte[] FirstCbcEncrypt(byte[] data, byte[] IV)
+    byte[] FirstCbcEncrypt(byte[] data, byte[] iv)
     {
-        return XorBytes(data, IV);
+        return XorBytes(data, iv);
+    }
+
+    byte[] LastCbcEncrypt(byte[] data, byte[] iv)
+    {
+        return XorBytes(data, iv);
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
     {
-        if (first.Length != second.Length) //TODO change for last block
-            throw new Exception("Can't do XOR, different length");
-
         var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
         {
