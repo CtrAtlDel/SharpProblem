@@ -1,9 +1,5 @@
-using System.Data;
-using System.Dynamic;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.VisualBasic;
 
 namespace CryptoLab;
 
@@ -31,33 +27,33 @@ public class Const
 
 public class Crypto
 {
-    private byte[] key = null;
+    private byte[] _key = null;
 
-    private string mode = Modes.ECB; //CT CBC CFB ECB OFB
+    private string _mode = Modes.ECB; //CT CBC CFB ECB OFB
 
-    private byte[] IV = null;
+    private byte[] _iv = null;
 
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
-        if (this.mode == Modes.ECB)
+        if (this._mode == Modes.ECB)
             return EncryptECB(data);
 
-        if (this.mode == Modes.CTR)
+        if (this._mode == Modes.CTR)
         {
             //use IV vector
         }
 
-        if (this.mode == Modes.CBC)
+        if (this._mode == Modes.CBC)
         {
             // patting = PKCS7
         }
 
-        if (this.mode == Modes.CFB)
+        if (this._mode == Modes.CFB)
         {
             // patting = NON
         }
 
-        if (this.mode == Modes.OFB)
+        if (this._mode == Modes.OFB)
         {
             //patting = NON
         }
@@ -89,44 +85,55 @@ public class Crypto
     byte[] EncryptCBC(byte[] data, byte[] iv)
     {
         //TODO maybe throw some exception
+        if (data.Length == 0)
+        {
+            throw new Exception("Empty data array");
+        }
+
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
-        
-        if (iv == null || iv.Length == 0) //???
+
+        if (iv == null || iv.Length == 0)
         {
             GenerateIV();
-            iv = this.IV;
+            iv = this._iv;
         }
         else
-            this.IV = iv;
-        //TODO point
+            this._iv = iv;
 
-        for (int i = 0; i < CountOfBlocks(data.Length); i++)
+        var spanFirst = spanData.Slice(0, Const.AesMsgSize);
+        var firstBlock = FirstCbcEncrypt(spanFirst.ToArray(), this._iv);
+        if (isEndOfArray(data, 0))
         {
-            if (!isEndOfArray(data, i))
-            {
-                var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
-            }
-            else
+            result.AddRange(ProcessBlockEncrypt(firstBlock, true, Padding.PKS7));
+            return result.ToArray();
+        }
+
+        result.AddRange(ProcessBlockEncrypt(firstBlock, false, Padding.PKS7));
+        for (int i = 1; i < CountOfBlocks(data.Length); i++)
+        {
+            if (isEndOfArray(data, i))
             {
                 var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-                result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
             }
+
+            var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
         }
+
         return result.ToArray();
     }
 
-    byte[] firstCBCEncrypt(byte[] data, byte[] IV)
+    byte[] FirstCbcEncrypt(byte[] data, byte[] IV)
     {
         return XorBytes(data, IV);
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
     {
-        if (first.Length != second.Length)
+        if (first.Length != second.Length) //TODO change for last block
             throw new Exception("Can't do XOR, different length");
-        byte[] result = new byte[first.Length];
+
+        var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
         {
             result[i] = (byte) (first[i] ^ second[i]);
@@ -141,7 +148,7 @@ public class Crypto
         using (var myRj = new AesCryptoServiceProvider())
         {
             myRj.GenerateIV();
-            this.IV = myRj.IV;
+            this._iv = myRj.IV;
         }
     }
 
@@ -182,7 +189,7 @@ public class Crypto
 
     byte[] BlockCipherEncrypt(byte[] data)
     {
-        if (this.key.Length == 0)
+        if (this._key.Length == 0)
             throw new Exception("Key is null");
 
         byte[] resultCipher = new byte[Const.AesKeySize];
@@ -190,7 +197,7 @@ public class Crypto
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
-            using (var aesEncryptor = aes.CreateEncryptor(this.key, new byte[Const.AesKeySize]))
+            using (var aesEncryptor = aes.CreateEncryptor(this._key, new byte[Const.AesKeySize]))
             {
                 aesEncryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
             }
@@ -201,24 +208,24 @@ public class Crypto
 
     byte[] Decrypt(byte[] data, byte[] iv = null)
     {
-        if (this.mode == Modes.ECB)
+        if (this._mode == Modes.ECB)
         {
             // 
         }
 
-        if (this.mode == Modes.CTR)
+        if (this._mode == Modes.CTR)
         {
         }
 
-        if (this.mode == Modes.CBC)
+        if (this._mode == Modes.CBC)
         {
         }
 
-        if (this.mode == Modes.CFB)
+        if (this._mode == Modes.CFB)
         {
         }
 
-        if (this.mode == Modes.OFB)
+        if (this._mode == Modes.OFB)
         {
         }
 
@@ -232,7 +239,7 @@ public class Crypto
 
     byte[] BlockCipherDecrypt(byte[] data)
     {
-        if (this.key.Length == 0)
+        if (this._key.Length == 0)
             throw new Exception("Key is null");
 
         byte[] blockCipherDecrypt = new byte[Const.AesKeySize];
@@ -240,7 +247,7 @@ public class Crypto
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
-            using (var aesDecryptor = aes.CreateDecryptor(this.key, new byte[Const.AesKeySize]))
+            using (var aesDecryptor = aes.CreateDecryptor(this._key, new byte[Const.AesKeySize]))
             {
                 aesDecryptor.TransformBlock(data, 0, Const.AesKeySize, blockCipherDecrypt, 0);
             }
@@ -253,7 +260,7 @@ public class Crypto
     {
         if (key.Length == Const.AesKeySize)
         {
-            this.key = key;
+            this._key = key;
         }
         else
         {
@@ -265,7 +272,7 @@ public class Crypto
     {
         if (mode == Modes.CTR || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
         {
-            this.mode = mode;
+            this._mode = mode;
         }
         else
         {
