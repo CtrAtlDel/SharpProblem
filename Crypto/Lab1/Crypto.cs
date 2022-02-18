@@ -33,6 +33,8 @@ public class Crypto
 
     private byte[] _iv = null;
 
+    private int _counter = 0;
+
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
         if (this._mode == Modes.ECB)
@@ -71,12 +73,12 @@ public class Crypto
             if (!isEndOfArray(data, i)) // get a part of data
             {
                 var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.NON));
+                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.PKS7));
                 continue;
             }
 
             var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-            result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.NON));
+            result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
         }
 
         return result.ToArray();
@@ -98,7 +100,7 @@ public class Crypto
         }
         else
             this._iv = iv;
-
+        
         var plainTextFirst = spanData.Slice(0, Const.AesMsgSize);
         var firstBlock = XorBytes(plainTextFirst.ToArray(), this._iv);
         if (isEndOfArray(data, 0))
@@ -171,6 +173,11 @@ public class Crypto
             cipherText = xorData;
         }
         return result.ToArray();
+    }
+
+    byte[] EncryptEFB(byte[] data, byte[] iv)
+    {
+        return null;
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
