@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -35,13 +36,14 @@ public class Crypto
 
     private int _counter = 0;
 
-    byte[] Encrypt(byte[] data, byte[] iv = null)
+    byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
             throw new Exception("Data is empty...");
-        
+
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
+        
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (this._mode == Modes.ECB || this._mode == Modes.CBC)
@@ -57,27 +59,44 @@ public class Crypto
         return result.ToArray();
     }
 
-    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
+    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding) //обработка каждого блока
     {
         if (padding != Padding.PKS7 || padding != Padding.NON)
             throw new Exception("You padding is not declared");
-    
+
         if (data.Length != Const.AesKeySize)
             throw new Exception("Data length is not 128 byte");
-            
-        if (isFinalBLock)
-        {
-            //use padding for our data
-            //TODO add if with padding
-        }
-            
-        byte[] resultEncrypt = BlockCipherEncrypt(data);
-    
 
-    
+        if (isFinalBLock) //помнить про то, что нужно дополнять также и блок размером 16 
+        {
+            //Modifies data
+            if (padding == Padding.PKS7)
+            {
+                //TODO padding PKS7
+            }
+            else // Padding NON
+            {
+                //TODO padding NON
+            }
+        }
+
+        // передается только блок!
+        if (_mode == Modes.ECB)
+        {
+            return BlockCipherEncrypt(data);
+        }
+
+        if (_mode == Modes.CBC)
+        {
+            //Как узнать что блок первый
+        }
+
+        byte[] resultEncrypt = BlockCipherEncrypt(data);
+
+
         return resultEncrypt;
     }
-    
+
     byte[] SplitData(Span<byte> data, int index)
     {
         if (isEndOfArray(data.ToArray(), index))
@@ -88,26 +107,26 @@ public class Crypto
         return data.Slice(index * Const.AesMsgSize, Const.AesMsgSize).ToArray();
     }
 
-    byte[] EncryptECB(byte[] data)
-    {
-        var spanData = new Span<byte>(data);
-        var result = new List<byte>();
-
-        for (int i = 0; i < CountOfBlocks(data.Length); i++)
-        {
-            if (!isEndOfArray(data, i)) // get a part of data
-            {
-                var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.PKS7));
-                continue;
-            }
-
-            var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-            result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
-        }
-
-        return result.ToArray();
-    }
+    // byte[] EncryptECB(byte[] data)
+    // {
+    //     var spanData = new Span<byte>(data);
+    //     var result = new List<byte>();
+    //
+    //     for (int i = 0; i < CountOfBlocks(data.Length); i++)
+    //     {
+    //         if (!isEndOfArray(data, i)) // get a part of data
+    //         {
+    //             var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
+    //             result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.PKS7));
+    //             continue;
+    //         }
+    //
+    //         var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
+    //         result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
+    //     }
+    //
+    //     return result.ToArray();
+    // }
 
     byte[] EncryptCBC(byte[] data, byte[] iv)
     {
@@ -156,7 +175,6 @@ public class Crypto
 
         return result.ToArray();
     }
-    
 
 
     byte[] EncryptCFB(byte[] data, byte[] iv)
@@ -240,8 +258,6 @@ public class Crypto
             return lenghtData / Const.AesMsgSize;
         return lenghtData / Const.AesMsgSize + 1;
     }
-
-
 
 
     byte[] BlockCipherEncrypt(byte[] data)
