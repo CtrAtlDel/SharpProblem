@@ -29,26 +29,32 @@ public class Const
 
 public class Crypto
 {
-    private byte[] _key = null;
-
     private string _mode = Modes.ECB; //CT CBC CFB ECB OFB
+
+    private byte[] _key = null;
 
     private byte[] _iv = null;
 
     private int _counter = 0;
 
     private byte[] _save = null;
-    
+
+    private bool _first = true;
+
     // save null parametr is first he is null
 
     byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
             throw new Exception("Data is empty...");
+        if (iv != null)
+        {
+            _iv = iv;
+        }
 
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
-
+        _first = true;
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (this._mode == Modes.ECB || this._mode == Modes.CBC)
@@ -61,6 +67,7 @@ public class Crypto
             }
         }
 
+        _first = false;
         return result.ToArray();
     }
 
@@ -78,7 +85,7 @@ public class Crypto
     {
         byte[] result = Array.Empty<byte>();
         Array.Copy(data, result, data.Length);
-        
+
         if (padding != Padding.PKS7 || padding != Padding.NON)
             throw new Exception("You padding is not declared");
 
@@ -104,10 +111,10 @@ public class Crypto
         if (_mode == Modes.CBC)
         {
             _save = EncryptCbc(result); //Как узнать что блок первый? 
-            result = _save;  
+            result = _save;
             // return _save;
         }
-        
+
         if (_mode == Modes.CFB)
         {
             _save = EncryptCfb(result);
@@ -123,7 +130,6 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
-            
         }
 
         if (isFinalBLock)
@@ -133,7 +139,7 @@ public class Crypto
                 result = Non(result, data.Length);
             }
         }
-        
+
         return result;
     }
 
@@ -141,7 +147,7 @@ public class Crypto
     {
         if (Const.AesMsgSize > 255)
             throw new Exception("Data length > 255 (huge length)");
-        
+
         int oldLength = data.Length;
         if (data.Length == Const.AesMsgSize)
         {
@@ -154,7 +160,7 @@ public class Crypto
 
         for (int i = oldLength; i < data.Length; i++)
         {
-            data[i] = (byte)(Const.AesMsgSize - oldLength);
+            data[i] = (byte) (Const.AesMsgSize - oldLength);
         }
 
         return data;
@@ -168,9 +174,10 @@ public class Crypto
 
     byte[] EncryptCbc(byte[] data) //уже дополненный блок 
     {
-        if (_iv == null) //first block
+        if (_iv == null || _first) //first block
         {
-            GenerateIv();
+            if (_iv == null)
+                GenerateIv();
             return BlockCipherEncrypt(XorBytes(data, _iv));
         }
         else
@@ -181,9 +188,10 @@ public class Crypto
 
     byte[] EncryptCfb(byte[] data)
     {
-        if (_iv == null) //first blocok
+        if (_iv == null || _first) //first blocok
         {
-            GenerateIv();
+            if (_iv == null)
+                GenerateIv();
             return XorBytes(data, BlockCipherEncrypt(_iv));
         }
         else
@@ -194,9 +202,10 @@ public class Crypto
 
     byte[] EncryptOfb(byte[] data)
     {
-        if (_iv == null)
+        if (_iv == null || _first)
         {
-            GenerateIv();
+            if (_iv == null)
+                GenerateIv();
             _save = BlockCipherEncrypt(_iv);
             return XorBytes(data, _save);
         }
