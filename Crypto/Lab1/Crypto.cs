@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CryptoLab;
 
+/*IV генерируется один раз для одного подключения*/
 public class Modes
 {
     public const string ECB = "ECB";
@@ -83,6 +84,7 @@ public class Crypto
         }
 
         // передается только блок!
+
         if (_mode == Modes.ECB)
         {
             return BlockCipherEncrypt(data);
@@ -90,11 +92,21 @@ public class Crypto
 
         if (_mode == Modes.CBC)
         {
-            //Как узнать что блок первый? 
-            _save = EncryptCbc(data);
+            _save = EncryptCbc(data); //Как узнать что блок первый? 
             return _save;
         }
 
+        if (_mode == Modes.CFB)
+        {
+            _save = EncryptCfb(data);
+            return _save;
+        }
+
+        if (_mode == Modes.OFB)
+        {
+            
+        }
+        
         byte[] resultEncrypt = BlockCipherEncrypt(data);
 
 
@@ -134,15 +146,42 @@ public class Crypto
 
     byte[] EncryptCbc(byte[] data) //уже дополненный блок 
     {
-        byte[] result = Array.Empty<byte>();
-        if (_iv == null)//first block
+        if (_iv == null) //first block
         {
             GenerateIv();
             return BlockCipherEncrypt(XorBytes(data, _iv));
         }
-        else // not first block hahahah
+        else
         {
             return BlockCipherEncrypt(XorBytes(data, _save));
+        }
+    }
+
+    byte[] EncryptCfb(byte[] data)
+    {
+        if (_iv == null) //first blocok
+        {
+            GenerateIv();
+            return XorBytes(data, BlockCipherEncrypt(_iv));
+        }
+        else
+        {
+            return XorBytes(data, BlockCipherEncrypt(_save));
+        }
+    }
+
+    byte[] EncryptOfb(byte[] data)
+    {
+        if (_iv == null)
+        {
+            GenerateIv();
+            _save = BlockCipherEncrypt(_iv);
+            return XorBytes(data, _save);
+        }
+        else
+        {
+            _save = BlockCipherEncrypt(_save);
+            return XorBytes(data, _save);
         }
     }
 
@@ -303,6 +342,8 @@ public class Crypto
         if (key.Length == Const.AesKeySize)
         {
             this._key = key;
+            _iv = null;
+            _save = null;
         }
         else
         {
@@ -314,11 +355,13 @@ public class Crypto
     {
         if (mode == Modes.CTR || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
         {
-            this._mode = mode;
+            _mode = mode;
+            _iv = null;
+            _save = null;
         }
         else
         {
-            throw new Exception("You mode is  undeclarated");
+            throw new Exception("You mode is not declarated");
         }
     }
 
