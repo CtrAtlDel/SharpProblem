@@ -10,6 +10,7 @@ namespace CryptoLab
     {
         public static void Main(string[] args)
         {
+            var crypter = new Crypto();
         }
     }
 };

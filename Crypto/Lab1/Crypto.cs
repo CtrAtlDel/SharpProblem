@@ -43,7 +43,7 @@ public class Crypto
 
     // save null parametr is first he is null
 
-    byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
+    public byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
             throw new Exception("Data is empty...");
@@ -389,7 +389,7 @@ public class Crypto
     }
 
 
-    void SetKey(byte[] key) //установка ключа шифрования\расшифрования
+     public void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
         if (key.Length == Const.AesKeySize)
         {
@@ -403,7 +403,7 @@ public class Crypto
         }
     }
 
-    void SetMode(string mode) //указание режима шифрования
+    public void SetMode(string mode) //указание режима шифрования
     {
         if (mode == Modes.CTR || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
         {
