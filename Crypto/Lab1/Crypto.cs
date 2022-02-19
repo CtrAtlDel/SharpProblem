@@ -37,30 +37,55 @@ public class Crypto
 
     byte[] Encrypt(byte[] data, byte[] iv = null)
     {
-        if (this._mode == Modes.ECB)
-            return EncryptECB(data);
-
-        if (this._mode == Modes.CTR)
+        if (data == null)
+            throw new Exception("Data is empty...");
+        
+        var spanData = new Span<byte>(data);
+        var result = new List<byte>();
+        for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
-            //use IV vector
+            if (this._mode == Modes.ECB || this._mode == Modes.CBC)
+            {
+                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.PKS7));
+            }
+            else
+            {
+                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
+            }
         }
 
-        if (this._mode == Modes.CBC)
+        return result.ToArray();
+    }
+
+    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
+    {
+        if (padding != Padding.PKS7 || padding != Padding.NON)
+            throw new Exception("You padding is not declared");
+    
+        if (data.Length != Const.AesKeySize)
+            throw new Exception("Data length is not 128 byte");
+            
+        if (isFinalBLock)
         {
-            // patting = PKCS7
+            //use padding for our data
+            //TODO add if with padding
+        }
+            
+        byte[] resultEncrypt = BlockCipherEncrypt(data);
+    
+
+    
+        return resultEncrypt;
+    }
+    
+    byte[] SplitData(Span<byte> data, int index)
+    {
+        if (isEndOfArray(data.ToArray(), index))
+        {
+            return data.Slice(index * Const.AesMsgSize, data.Length - index * Const.AesMsgSize).ToArray();
         }
 
-        if (this._mode == Modes.CFB)
-        {
-            // patting = NON
-        }
-
-        if (this._mode == Modes.OFB)
-        {
-            //patting = NON
-        }
-
-        return null;
+        return data.Slice(index * Const.AesMsgSize, Const.AesMsgSize).ToArray();
     }
 
     byte[] EncryptECB(byte[] data)
@@ -86,7 +111,8 @@ public class Crypto
 
     byte[] EncryptCBC(byte[] data, byte[] iv)
     {
-        //TODO maybe throw some exception
+        // TODO maybe throw some exception
+
         if (data.Length == 0)
             throw new Exception("Empty data array");
 
@@ -95,12 +121,12 @@ public class Crypto
 
         if (iv == null || iv.Length == 0)
         {
-            GenerateIV();
+            GenerateIv();
             iv = this._iv;
         }
         else
             this._iv = iv;
-        
+
         var plainTextFirst = spanData.Slice(0, Const.AesMsgSize);
         var firstBlock = XorBytes(plainTextFirst.ToArray(), this._iv);
         if (isEndOfArray(data, 0))
@@ -111,7 +137,7 @@ public class Crypto
 
         var cipherText = ProcessBlockEncrypt(firstBlock, false, Padding.PKS7);
         result.AddRange(cipherText);
-        
+
         for (int i = 1; i < CountOfBlocks(data.Length); i++)
         {
             if (isEndOfArray(data, i))
@@ -123,13 +149,15 @@ public class Crypto
             }
 
             var plainText = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
-            var xorData = XorBytes(plainText.ToArray(),cipherText);
+            var xorData = XorBytes(plainText.ToArray(), cipherText);
             cipherText = ProcessBlockEncrypt(xorData, false, Padding.PKS7);
             result.AddRange(cipherText);
         }
 
         return result.ToArray();
     }
+    
+
 
     byte[] EncryptCFB(byte[] data, byte[] iv)
     {
@@ -141,15 +169,15 @@ public class Crypto
 
         if (iv == null || iv.Length == 0)
         {
-            GenerateIV();
+            GenerateIv();
             iv = this._iv;
         }
         else
             this._iv = iv;
-    
+
         var ivEncrypt = ProcessBlockEncrypt(this._iv, false, Padding.NON);
         var plainTextFirst = spanData.Slice(0, Const.AesMsgSize);
-        if (isEndOfArray(data,0))
+        if (isEndOfArray(data, 0))
         {
             return XorBytes(plainTextFirst.ToArray(), ivEncrypt);
         }
@@ -166,18 +194,15 @@ public class Crypto
                 result.AddRange(xorDataEnd);
                 return result.ToArray();
             }
+
             cipherText = ProcessBlockEncrypt(cipherText, false, Padding.NON);
             var plainText = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
             var xorData = XorBytes(plainText.ToArray(), cipherText);
             result.AddRange(xorData);
             cipherText = xorData;
         }
-        return result.ToArray();
-    }
 
-    byte[] EncryptEFB(byte[] data, byte[] iv)
-    {
-        return null;
+        return result.ToArray();
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
@@ -191,7 +216,7 @@ public class Crypto
         return result;
     }
 
-    void GenerateIV() // sizeIV = sizeDataBlock it is 
+    void GenerateIv() // sizeIV = sizeDataBlock it is 
     {
         //TODO ask about size IV
         using (var myRj = new AesCryptoServiceProvider())
@@ -217,24 +242,7 @@ public class Crypto
     }
 
 
-    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
-    {
-        if (padding != Padding.PKS7 || padding != Padding.NON)
-            throw new Exception("You padding is not declared");
 
-        if (data.Length != Const.AesKeySize)
-            throw new Exception("Data length is not 128 byte");
-
-        byte[] resultEncrypt = BlockCipherEncrypt(data);
-
-        if (isFinalBLock)
-        {
-            //use padding for our data
-            //TODO add if with padding
-        }
-
-        return resultEncrypt;
-    }
 
     byte[] BlockCipherEncrypt(byte[] data)
     {
@@ -255,55 +263,6 @@ public class Crypto
         return resultCipher;
     }
 
-    byte[] Decrypt(byte[] data, byte[] iv = null)
-    {
-        if (this._mode == Modes.ECB)
-        {
-            // 
-        }
-
-        if (this._mode == Modes.CTR)
-        {
-        }
-
-        if (this._mode == Modes.CBC)
-        {
-        }
-
-        if (this._mode == Modes.CFB)
-        {
-        }
-
-        if (this._mode == Modes.OFB)
-        {
-        }
-
-        return null;
-    }
-
-    byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBlock, string padding)
-    {
-        return null;
-    }
-
-    byte[] BlockCipherDecrypt(byte[] data)
-    {
-        if (this._key.Length == 0)
-            throw new Exception("Key is null");
-
-        byte[] blockCipherDecrypt = new byte[Const.AesKeySize];
-
-        using (Aes aes = new AesCryptoServiceProvider())
-        {
-            aes.Mode = CipherMode.ECB;
-            using (var aesDecryptor = aes.CreateDecryptor(this._key, new byte[Const.AesKeySize]))
-            {
-                aesDecryptor.TransformBlock(data, 0, Const.AesKeySize, blockCipherDecrypt, 0);
-            }
-        }
-
-        return blockCipherDecrypt;
-    }
 
     void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
