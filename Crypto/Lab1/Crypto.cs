@@ -38,6 +38,8 @@ public class Crypto
     private int _counter = 0;
 
     private byte[] _save = null;
+    
+    // save null parametr is first he is null
 
     byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
@@ -74,10 +76,13 @@ public class Crypto
 
     byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding) //обработка каждого блока
     {
+        byte[] result = Array.Empty<byte>();
+        Array.Copy(data, result, data.Length);
+        
         if (padding != Padding.PKS7 || padding != Padding.NON)
             throw new Exception("You padding is not declared");
 
-        if (data.Length != Const.AesKeySize)
+        if (result.Length != Const.AesKeySize)
             throw new Exception("Data length is not 128 byte");
 
         if (isFinalBLock) //помнить про то, что нужно дополнять также и блок размером 16 
@@ -85,7 +90,7 @@ public class Crypto
             //Modifies data
             if (padding == Padding.PKS7)
             {
-                data = Pks7(data);
+                result = Pks7(result);
             }
         }
 
@@ -93,34 +98,43 @@ public class Crypto
 
         if (_mode == Modes.ECB)
         {
-            return BlockCipherEncrypt(data);
+            return BlockCipherEncrypt(result);
         }
 
         if (_mode == Modes.CBC)
         {
-            _save = EncryptCbc(data); //Как узнать что блок первый? 
-            return _save;
+            _save = EncryptCbc(result); //Как узнать что блок первый? 
+            result = _save;  
+            // return _save;
         }
         
         if (_mode == Modes.CFB)
         {
-            _save = EncryptCfb(data);
-            return _save;
+            _save = EncryptCfb(result);
+            result = _save;
+            // return _save;
         }
 
         if (_mode == Modes.OFB)
         {
-            return EncryptOfb(data);
+            result = EncryptOfb(result);
+            // return EncryptOfb(resultData);
         }
 
         if (_mode == Modes.CTR)
         {
+            
+        }
+
+        if (isFinalBLock)
+        {
+            if (padding == Padding.NON)
+            {
+                result = Non(result, data.Length);
+            }
         }
         
-        byte[] resultEncrypt = BlockCipherEncrypt(data);
-
-
-        return resultEncrypt;
+        return result;
     }
 
     byte[] Pks7(byte[] data)
@@ -146,10 +160,11 @@ public class Crypto
         return data;
     }
 
-    // byte[] Non(byte[] data)
-    // {
-    //     
-    // }
+    byte[] Non(byte[] data, int length)
+    {
+        var list = new Span<byte>(data);
+        return list.Slice(0, length).ToArray();
+    }
 
     byte[] EncryptCbc(byte[] data) //уже дополненный блок 
     {
