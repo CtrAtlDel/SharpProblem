@@ -36,6 +36,8 @@ public class Crypto
 
     private int _counter = 0;
 
+    private byte[] _save = null;
+
     byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
@@ -43,7 +45,7 @@ public class Crypto
 
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
-        
+
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
             if (this._mode == Modes.ECB || this._mode == Modes.CBC)
@@ -88,7 +90,9 @@ public class Crypto
 
         if (_mode == Modes.CBC)
         {
-            //Как узнать что блок первый
+            //Как узнать что блок первый? 
+            _save = EncryptCbc(data);
+            return _save;
         }
 
         byte[] resultEncrypt = BlockCipherEncrypt(data);
@@ -127,6 +131,20 @@ public class Crypto
     //
     //     return result.ToArray();
     // }
+
+    byte[] EncryptCbc(byte[] data) //уже дополненный блок 
+    {
+        byte[] result = Array.Empty<byte>();
+        if (_iv == null)//first block
+        {
+            GenerateIv();
+            return BlockCipherEncrypt(XorBytes(data, _iv));
+        }
+        else // not first block hahahah
+        {
+            return BlockCipherEncrypt(XorBytes(data, _save));
+        }
+    }
 
     byte[] EncryptCBC(byte[] data, byte[] iv)
     {
