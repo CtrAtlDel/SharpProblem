@@ -29,7 +29,7 @@ public class Const
 
 public class Crypto
 {
-    private string _mode = Modes.ECB; //CT CBC CFB ECB OFB
+    private string _mode = Modes.ECB; //CT CBC CFB ECB OF
 
     private byte[] _key = null;
 
@@ -57,6 +57,12 @@ public class Crypto
         _first = true;
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
+            if (i == 0) //chek this
+                _first = true;
+            else
+                _first = false;
+
+
             if (this._mode == Modes.ECB || this._mode == Modes.CBC)
             {
                 result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.PKS7));
@@ -389,7 +395,7 @@ public class Crypto
     }
 
 
-     public void SetKey(byte[] key) //установка ключа шифрования\расшифрования
+    public void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
         if (key.Length == Const.AesKeySize)
         {
