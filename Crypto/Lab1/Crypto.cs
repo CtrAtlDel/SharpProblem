@@ -22,8 +22,8 @@ public class Padding
 
 public class Const
 {
-    public const int AesKeySize = 128; // 128 bytes max AES key
-    public const int AesMsgSize = 16;
+    public const int AesKeySize = 16; // 16 byte 128 bit max AES key
+    public const int AesMsgSize = 16; // 
     public const int SizeMode = 5; // count of modes
 }
 
@@ -35,7 +35,7 @@ public class Crypto
 
     private byte[] _iv = null;
 
-    private int _counter = 0;
+    private int _counter = 0; // size is 128 bits -> 4 bytes
 
     private byte[] _save = null;
 
@@ -61,7 +61,6 @@ public class Crypto
                 _first = true;
             else
                 _first = false;
-
 
             if (this._mode == Modes.ECB || this._mode == Modes.CBC)
             {
@@ -89,14 +88,8 @@ public class Crypto
 
     byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding) //обработка каждого блока
     {
-        byte[] result = Array.Empty<byte>();
+        byte[] result = new byte[data.Length];
         Array.Copy(data, result, data.Length);
-
-        if (padding != Padding.PKS7 || padding != Padding.NON)
-            throw new Exception("You padding is not declared");
-
-        if (result.Length != Const.AesKeySize)
-            throw new Exception("Data length is not 128 byte");
 
         if (isFinalBLock) //помнить про то, что нужно дополнять также и блок размером 16 
         {
@@ -118,24 +111,22 @@ public class Crypto
         {
             _save = EncryptCbc(result); //Как узнать что блок первый? 
             result = _save;
-            // return _save;
         }
 
         if (_mode == Modes.CFB)
         {
             _save = EncryptCfb(result);
             result = _save;
-            // return _save;
         }
 
         if (_mode == Modes.OFB)
         {
             result = EncryptOfb(result);
-            // return EncryptOfb(resultData);
         }
 
         if (_mode == Modes.CTR)
         {
+            
         }
 
         if (isFinalBLock)
@@ -157,11 +148,11 @@ public class Crypto
         int oldLength = data.Length;
         if (data.Length == Const.AesMsgSize)
         {
-            Array.Resize(ref data, Const.AesMsgSize);
+            Array.Resize(ref data, 2 * Const.AesMsgSize);
         }
         else
         {
-            Array.Resize(ref data, Const.AesKeySize - data.Length);
+            Array.Resize(ref data, Const.AesMsgSize);
         }
 
         for (int i = oldLength; i < data.Length; i++)
@@ -178,7 +169,7 @@ public class Crypto
         return list.Slice(0, length).ToArray();
     }
 
-    byte[] EncryptCbc(byte[] data) //уже дополненный блок 
+    byte[] EncryptCbc(byte[] data) 
     {
         if (_iv == null || _first) //first block
         {
@@ -220,6 +211,11 @@ public class Crypto
             _save = BlockCipherEncrypt(_save);
             return XorBytes(data, _save);
         }
+    }
+
+    byte[] EncryptCtr(byte[] data)
+    {
+        return data;
     }
 
     byte[] EncryptECB(byte[] data)
@@ -340,6 +336,9 @@ public class Crypto
 
     byte[] XorBytes(byte[] first, byte[] second)
     {
+        // if (second.Length > first.Length)
+        //     throw new Exception("Length second argument > Length first argument");
+        
         var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
         {
@@ -377,8 +376,11 @@ public class Crypto
 
     byte[] BlockCipherEncrypt(byte[] data)
     {
-        if (this._key.Length == 0)
+        if (_key == null)
             throw new Exception("Key is null");
+        
+        if (this._key.Length == 0)
+            throw new Exception("Key is empty");
 
         byte[] resultCipher = new byte[Const.AesKeySize];
 
@@ -405,7 +407,7 @@ public class Crypto
         }
         else
         {
-            throw new Exception("Key size not equal 128 bytes");
+            throw new Exception("Key size not equal 16 bytes");
         }
     }
 
@@ -423,13 +425,30 @@ public class Crypto
         }
     }
 
-    private byte[] MsgToByte(string msg) // translate string msg to byte[] msg
+    //TODO change private -> public
+    public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
     }
 
-    private string ByteToMsg(byte[] data)
+    public string ByteToMsg(byte[] data)
     {
         return BitConverter.ToString(data);
+    }
+
+    //Utilits generate key
+
+    public byte[] GetIv()
+    {
+        return _iv;
+    }
+
+    public byte[] GenerateKey()
+    {
+        byte[] bytes = new byte[16];
+        var rng = new RNGCryptoServiceProvider();
+        rng.GetBytes(bytes);
+        return bytes;
+
     }
 }
