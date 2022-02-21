@@ -6,7 +6,6 @@ using System.Text;
 
 namespace CryptoLab
 {
-    
     internal class Programm
     {
         static void testEcb() // done.
@@ -15,11 +14,14 @@ namespace CryptoLab
             crypter.SetMode("ECB");
             var key = crypter.GenerateKey();
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            byte[] data = crypter.MsgToByte("0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+            byte[] data =
+                crypter.MsgToByte(
+                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             var answer = crypter.Encrypt(data);
             string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
-            Console.Write(answerString.Replace("-",""));
+            Console.WriteLine(answerString.Replace("-", ""));
+            Console.WriteLine();
         }
 
         static void testCbc() //done.
@@ -28,44 +30,55 @@ namespace CryptoLab
             crypter.SetMode("CBC");
             var key = crypter.GenerateKey();
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            byte[] data = crypter.MsgToByte("0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+            byte[] data =
+                crypter.MsgToByte(
+                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
-            Console.WriteLine(answerString.Replace("-",""));
+            Console.WriteLine(answerString.Replace("-", ""));
             Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
+            Console.WriteLine();
         }
 
-        static void testCfb() // not done .
+        static void testCfb() // done.
         {
             var crypter = new Crypto();
             crypter.SetMode("CFB");
             var key = crypter.GenerateKey();
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            byte[] data = crypter.MsgToByte("0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+            byte[] data =
+                crypter.MsgToByte(
+                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
-            Console.WriteLine(answerString.Replace("-",""));
+            Console.WriteLine(answerString.Replace("-", ""));
             Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
+            Console.WriteLine();
         }
 
-        static void testOfb() // done
+        static void testOfb() // done.
         {
             var crypter = new Crypto();
             crypter.SetMode("OFB");
             var key = crypter.GenerateKey();
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            byte[] data = crypter.MsgToByte("0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+            byte[] data =
+                crypter.MsgToByte(
+                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
-            Console.WriteLine(answerString.Replace("-",""));
+            Console.WriteLine(answerString.Replace("-", ""));
             Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
+            Console.WriteLine();
         }
 
         public static void Main(string[] args)
         {
             var crypter = new Crypto();
+            testEcb();
+            testCbc();
+            testCfb();
             testOfb();
-
         }
     }
 };

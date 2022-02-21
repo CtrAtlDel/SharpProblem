@@ -42,7 +42,8 @@ public class Crypto
     private bool _first = true;
 
     // save null parametr is first he is null
-
+    
+    // public byte[] Decrypt
     public byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
@@ -51,7 +52,6 @@ public class Crypto
         {
             _iv = iv;
         }
-
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
         _first = true;
