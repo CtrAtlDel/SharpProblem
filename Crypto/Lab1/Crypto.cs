@@ -256,6 +256,27 @@ public class Crypto
         return lenghtData / Const.AesMsgSize + 1;
     }
 
+    byte[] BlockCipherEncryptFinal(byte[] data)
+    {
+        if (_key == null)
+            throw new Exception("Key is null");
+        
+        if (this._key.Length == 0)
+            throw new Exception("Key is empty");
+
+        byte[] resultCipher = new byte[Const.AesKeySize];
+
+        using (Aes aes = new AesCryptoServiceProvider())
+        {
+            aes.Mode = CipherMode.ECB;
+            using (var aesEncryptor = aes.CreateEncryptor(this._key, new byte[Const.AesKeySize]))
+            {
+                resultCipher = aesEncryptor.TransformFinalBlock(data, 0, Const.AesKeySize);
+            }
+        }
+
+        return resultCipher;
+    }
 
     byte[] BlockCipherEncrypt(byte[] data)
     {
