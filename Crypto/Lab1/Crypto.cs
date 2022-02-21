@@ -43,12 +43,151 @@ public class Crypto
 
     // save null parametr is first he is null
 
-    // public byte[] Decrypt(byte[] data, byte[] iv = null)
-    // {
-    //     if (data == null)
-    //         throw new Exception("Data is empty...");
-    //     
-    // }
+    public byte[] Decrypt(byte[] data, byte[] iv = null)
+    {
+        if (iv != null)
+            _iv = iv;
+
+        var spanData = new Span<byte>(data);
+        var result = new List<byte>();
+
+        _first = true;
+        for (int i = 0; i < CountOfBlocks(data.Length); i++)
+        {
+            if (i == 0) //chek this
+                _first = true;
+            else
+                _first = false;
+
+            if (this._mode == Modes.ECB || this._mode == Modes.CBC)
+            {
+                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.PKS7));
+            }
+            else
+            {
+                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
+            }
+        }
+
+        _first = false;
+
+        return result.ToArray();
+    }
+
+    byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBLock, string padding)
+    {
+        byte[] result = new byte[data.Length];
+        Array.Copy(data, result, data.Length);
+
+        if (isFinalBLock)
+        {
+            if (padding == Padding.PKS7)
+            {
+                // result = Pks7(result);
+            }
+        }
+
+        if (_mode == Modes.ECB)
+        {
+            return BlockCipherDecrypt(result);
+        }
+
+        if (_mode == Modes.CBC)
+        {
+            _save = EncryptCbc(result);
+            result = _save;
+        }
+
+        if (_mode == Modes.CFB)
+        {
+            _save = EncryptCfb(result);
+            result = _save;
+        }
+
+        if (_mode == Modes.OFB)
+        {
+            result = EncryptOfb(result);
+        }
+
+        if (_mode == Modes.CTR)
+        {
+        }
+
+        if (isFinalBLock)
+        {
+            if (padding == Padding.NON)
+            {
+                // result = Non(result, data.Length);
+            }
+        }
+
+        return result;
+    }
+
+    byte[] DecryptCbc(byte[] data)
+    {
+        if (_iv == null || _first) //first block
+        {
+            if (_iv == null)
+                GenerateIv();
+            return BlockCipherDecrypt(XorBytes(data, _iv));
+        }
+        else
+        {
+            return BlockCipherDecrypt(XorBytes(data, _save));
+        }
+    }
+
+    byte[] DecryptCfb(byte[] data)
+    {
+        if (_iv == null || _first) //first block
+        {
+            if (_iv == null)
+                GenerateIv();
+            return BlockCipherDecrypt(XorBytes(data, _iv));
+        }
+        else
+        {
+            return BlockCipherDecrypt(XorBytes(data, _save));
+        }
+    }
+
+    byte[] DecryptOfb(byte[] data)
+    {
+        if (_iv == null || _first)
+        {
+            if (_iv == null)
+                GenerateIv();
+            _save = BlockCipherDecrypt(_iv);
+            return XorBytes(data, _save);
+        }
+        else
+        {
+            _save = BlockCipherDecrypt(_save);
+            return XorBytes(data, _save);
+        }
+    }
+
+    byte[] BlockCipherDecrypt(byte[] data)
+    {
+        if (_key == null)
+            throw new Exception("Key is null");
+
+        if (this._key.Length == 0)
+            throw new Exception("Key is empty");
+        byte[] resultCipher = new byte[Const.AesKeySize];
+        using (Aes aes = new AesCryptoServiceProvider())
+        {
+            aes.Mode = CipherMode.ECB;
+            using (var aesDecryptor = aes.CreateDecryptor(_key, new byte[Const.AesKeySize]))
+            {
+                aesDecryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
+            }
+        }
+
+        return resultCipher;
+    }
+
     public byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
@@ -57,12 +196,13 @@ public class Crypto
         {
             _iv = iv;
         }
+
         var spanData = new Span<byte>(data);
         var result = new List<byte>();
         _first = true;
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
-            if (i == 0) //chek this
+            if (i == 0) //check this
                 _first = true;
             else
                 _first = false;
@@ -131,7 +271,6 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
-            
         }
 
         if (isFinalBLock)
@@ -174,7 +313,7 @@ public class Crypto
         return list.Slice(0, length).ToArray();
     }
 
-    byte[] EncryptCbc(byte[] data) 
+    byte[] EncryptCbc(byte[] data)
     {
         if (_iv == null || _first) //first block
         {
@@ -227,7 +366,7 @@ public class Crypto
     {
         // if (second.Length > first.Length)
         //     throw new Exception("Length second argument > Length first argument");
-        
+
         var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
         {
@@ -265,7 +404,7 @@ public class Crypto
     {
         if (_key == null)
             throw new Exception("Key is null");
-        
+
         if (this._key.Length == 0)
             throw new Exception("Key is empty");
 
@@ -287,7 +426,7 @@ public class Crypto
     {
         if (_key == null)
             throw new Exception("Key is null");
-        
+
         if (this._key.Length == 0)
             throw new Exception("Key is empty");
 
@@ -304,7 +443,6 @@ public class Crypto
 
         return resultCipher;
     }
-
 
     public void SetKey(byte[] key) //установка ключа шифрования\расшифрования
     {
@@ -358,6 +496,5 @@ public class Crypto
         var rng = new RNGCryptoServiceProvider();
         rng.GetBytes(bytes);
         return bytes;
-
     }
 }

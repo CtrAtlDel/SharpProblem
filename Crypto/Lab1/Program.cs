@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,9 +20,12 @@ namespace CryptoLab
                     "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             var answer = crypter.Encrypt(data);
-            string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
+            var answerString = crypter.ByteToMsg(crypter.Encrypt(data));
+            var cryptString = crypter.Encrypt(data);
+            var decryptString = crypter.Decrypt(cryptString);
             Console.WriteLine(answerString.Replace("-", ""));
             Console.WriteLine();
+            Console.WriteLine(crypter.ByteToMsg(decryptString).Replace("-",""));
         }
 
         static void testCbc() //done.
