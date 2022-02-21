@@ -10,7 +10,7 @@ public class Modes
     public const string ECB = "ECB";
     public const string CBC = "CBC";
     public const string CFB = "CFB";
-    public const string OFB = "CFB";
+    public const string OFB = "OFB";
     public const string CTR = "CTR";
 }
 
@@ -218,122 +218,6 @@ public class Crypto
         return data;
     }
 
-    byte[] EncryptECB(byte[] data)
-    {
-        var spanData = new Span<byte>(data);
-        var result = new List<byte>();
-
-        for (int i = 0; i < CountOfBlocks(data.Length); i++)
-        {
-            if (!isEndOfArray(data, i)) // get a part of data
-            {
-                var spanSlice = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize);
-                result.AddRange(ProcessBlockEncrypt(spanSlice.ToArray(), false, Padding.PKS7));
-                continue;
-            }
-
-            var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-            result.AddRange(ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7));
-        }
-
-        return result.ToArray();
-    }
-
-    byte[] EncryptCBC(byte[] data, byte[] iv)
-    {
-        // TODO maybe throw some exception
-
-        if (data.Length == 0)
-            throw new Exception("Empty data array");
-
-        var spanData = new Span<byte>(data);
-        var result = new List<byte>();
-
-        if (iv == null || iv.Length == 0)
-        {
-            GenerateIv();
-            iv = this._iv;
-        }
-        else
-            this._iv = iv;
-
-        var plainTextFirst = spanData.Slice(0, Const.AesMsgSize);
-        var firstBlock = XorBytes(plainTextFirst.ToArray(), this._iv);
-        if (isEndOfArray(data, 0))
-        {
-            result.AddRange(ProcessBlockEncrypt(firstBlock, true, Padding.PKS7));
-            return result.ToArray();
-        }
-
-        var cipherText = ProcessBlockEncrypt(firstBlock, false, Padding.PKS7);
-        result.AddRange(cipherText);
-
-        for (int i = 1; i < CountOfBlocks(data.Length); i++)
-        {
-            if (isEndOfArray(data, i))
-            {
-                var endOfData = spanData.Slice(i * Const.AesMsgSize, spanData.Length - i * Const.AesMsgSize);
-                var tmpData = ProcessBlockEncrypt(endOfData.ToArray(), true, Padding.PKS7);
-                result.AddRange(cipherText);
-                return result.ToArray();
-            }
-
-            var plainText = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
-            var xorData = XorBytes(plainText.ToArray(), cipherText);
-            cipherText = ProcessBlockEncrypt(xorData, false, Padding.PKS7);
-            result.AddRange(cipherText);
-        }
-
-        return result.ToArray();
-    }
-
-
-    byte[] EncryptCFB(byte[] data, byte[] iv)
-    {
-        //TODO maybe throw some exception
-        if (data.Length == 0)
-            throw new Exception("Empty data array");
-        var spanData = new Span<byte>(data);
-        var result = new List<byte>();
-
-        if (iv == null || iv.Length == 0)
-        {
-            GenerateIv();
-            iv = this._iv;
-        }
-        else
-            this._iv = iv;
-
-        var ivEncrypt = ProcessBlockEncrypt(this._iv, false, Padding.NON);
-        var plainTextFirst = spanData.Slice(0, Const.AesMsgSize);
-        if (isEndOfArray(data, 0))
-        {
-            return XorBytes(plainTextFirst.ToArray(), ivEncrypt);
-        }
-
-        var cipherText = XorBytes(plainTextFirst.ToArray(), ivEncrypt);
-        result.AddRange(cipherText);
-        for (int i = 1; i < CountOfBlocks(data.Length); i++)
-        {
-            if (isEndOfArray(data, i))
-            {
-                cipherText = ProcessBlockEncrypt(cipherText, true, Padding.NON);
-                var plainTextEnd = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
-                var xorDataEnd = XorBytes(plainTextEnd.ToArray(), cipherText);
-                result.AddRange(xorDataEnd);
-                return result.ToArray();
-            }
-
-            cipherText = ProcessBlockEncrypt(cipherText, false, Padding.NON);
-            var plainText = spanData.Slice(i * Const.AesMsgSize, Const.AesMsgSize); // a pies of data
-            var xorData = XorBytes(plainText.ToArray(), cipherText);
-            result.AddRange(xorData);
-            cipherText = xorData;
-        }
-
-        return result.ToArray();
-    }
-
     byte[] XorBytes(byte[] first, byte[] second)
     {
         // if (second.Length > first.Length)
@@ -350,7 +234,6 @@ public class Crypto
 
     void GenerateIv() // sizeIV = sizeDataBlock it is 
     {
-        //TODO ask about size IV
         using (var myRj = new AesCryptoServiceProvider())
         {
             myRj.GenerateIV();
