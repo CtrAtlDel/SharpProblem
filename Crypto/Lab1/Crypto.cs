@@ -42,8 +42,13 @@ public class Crypto
     private bool _first = true;
 
     // save null parametr is first he is null
-    
-    // public byte[] Decrypt
+
+    // public byte[] Decrypt(byte[] data, byte[] iv = null)
+    // {
+    //     if (data == null)
+    //         throw new Exception("Data is empty...");
+    //     
+    // }
     public byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
     {
         if (data == null)
