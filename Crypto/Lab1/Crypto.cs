@@ -171,17 +171,18 @@ public class Crypto
     byte[] BlockCipherDecrypt(byte[] data)
     {
         if (_key == null)
-            throw new Exception("Key is null");
-
+            throw new Exception("Key is null...");
         if (this._key.Length == 0)
-            throw new Exception("Key is empty");
+            throw new Exception("Key is empty...");
+        
         byte[] resultCipher = new byte[Const.AesKeySize];
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
+            aes.Padding = PaddingMode.None;
             using (var aesDecryptor = aes.CreateDecryptor(_key, new byte[Const.AesKeySize]))
             {
-                aesDecryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
+                resultCipher = aesDecryptor.TransformFinalBlock(data, 0, Const.AesKeySize);
             }
         }
 
@@ -364,9 +365,6 @@ public class Crypto
 
     byte[] XorBytes(byte[] first, byte[] second)
     {
-        // if (second.Length > first.Length)
-        //     throw new Exception("Length second argument > Length first argument");
-
         var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
         {
