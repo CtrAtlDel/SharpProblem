@@ -94,14 +94,14 @@ public class Crypto
 
         if (_mode == Modes.CBC)
         {
-            _save = EncryptCbc(result);
-            result = _save;
+            result = DecryptCbc(result);
+            _save = data;
         }
 
         if (_mode == Modes.CFB)
         {
-            _save = EncryptCfb(result);
-            result = _save;
+            result = EncryptCfb(result);
+            _save = data;
         }
 
         if (_mode == Modes.OFB)
@@ -126,38 +126,49 @@ public class Crypto
 
     byte[] DecryptCbc(byte[] data)
     {
-        if (_iv == null || _first) //first block
+        if (_iv == null)
+            throw new Exception("Cannot decrypt IV is null");
+        if (_key == null)
+            throw new Exception("Cannot find key");
+
+        if (_first) //first block
         {
-            if (_iv == null)
-                GenerateIv();
-            return BlockCipherDecrypt(XorBytes(data, _iv));
+            return XorBytes(BlockCipherDecrypt(data), _iv);
         }
         else
         {
-            return BlockCipherDecrypt(XorBytes(data, _save));
+            byte[] tmp = data;
+            return XorBytes(BlockCipherDecrypt(data), _save);
         }
     }
 
     byte[] DecryptCfb(byte[] data)
     {
-        if (_iv == null || _first) //first block
+        if (_iv == null)
+            throw new Exception("Cannot decrypt IV is null");
+        if (_key == null)
+            throw new Exception("Cannot find key");
+
+        if (_first) //first block
         {
-            if (_iv == null)
-                GenerateIv();
-            return BlockCipherDecrypt(XorBytes(data, _iv));
+            
+            return XorBytes(BlockCipherDecrypt(_iv), data);
         }
         else
         {
-            return BlockCipherDecrypt(XorBytes(data, _save));
+            return XorBytes(BlockCipherDecrypt(_save), data);
         }
     }
 
     byte[] DecryptOfb(byte[] data)
     {
-        if (_iv == null || _first)
+        if (_iv == null)
+            throw new Exception("Cannot decrypt IV is null");
+        if (_key == null)
+            throw new Exception("Cannot find key");
+        
+        if (_first)
         {
-            if (_iv == null)
-                GenerateIv();
             _save = BlockCipherDecrypt(_iv);
             return XorBytes(data, _save);
         }
@@ -174,7 +185,7 @@ public class Crypto
             throw new Exception("Key is null...");
         if (this._key.Length == 0)
             throw new Exception("Key is empty...");
-        
+
         byte[] resultCipher = new byte[Const.AesKeySize];
         using (Aes aes = new AesCryptoServiceProvider())
         {
@@ -398,28 +409,6 @@ public class Crypto
         return lenghtData / Const.AesMsgSize + 1;
     }
 
-    byte[] BlockCipherEncryptFinal(byte[] data)
-    {
-        if (_key == null)
-            throw new Exception("Key is null");
-
-        if (this._key.Length == 0)
-            throw new Exception("Key is empty");
-
-        byte[] resultCipher = new byte[Const.AesKeySize];
-
-        using (Aes aes = new AesCryptoServiceProvider())
-        {
-            aes.Mode = CipherMode.ECB;
-            using (var aesEncryptor = aes.CreateEncryptor(this._key, new byte[Const.AesKeySize]))
-            {
-                resultCipher = aesEncryptor.TransformFinalBlock(data, 0, Const.AesKeySize);
-            }
-        }
-
-        return resultCipher;
-    }
-
     byte[] BlockCipherEncrypt(byte[] data)
     {
         if (_key == null)
@@ -471,6 +460,7 @@ public class Crypto
     }
 
     //TODO change private -> public
+    //TODo something wrong with this 2 fun
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
