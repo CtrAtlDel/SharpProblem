@@ -41,8 +41,6 @@ public class Crypto
 
     private bool _first = true;
 
-    // save null parametr is first he is null
-
     public byte[] Decrypt(byte[] data, byte[] iv = null)
     {
         if (iv != null)
@@ -83,12 +81,15 @@ public class Crypto
         {
             if (padding == Padding.PKS7)
             {
-                // result = Pks7(result);
+                if (data[Const.AesMsgSize - 1] == Const.AesMsgSize)
+                {
+                    return new List<byte>().ToArray();
+                }
             }
         }
 
         if (_mode == Modes.ECB)
-            return BlockCipherDecrypt(result);
+            result = BlockCipherDecrypt(result);
 
         if (_mode == Modes.CBC)
         {
@@ -111,9 +112,11 @@ public class Crypto
 
         if (isFinalBLock)
         {
-            if (padding == Padding.NON)
+            if (padding == Padding.PKS7)
             {
-                // result = Non(result, data.Length);
+                var counter = result[Const.AesMsgSize - 1];
+                var spanData = new Span<byte>(result);
+                return spanData.Slice(0, spanData.Length - counter).ToArray();
             }
         }
 
@@ -122,6 +125,7 @@ public class Crypto
 
     byte[] DecryptCbc(byte[] data)
     {
+        
         if (_iv == null)
             throw new Exception("Cannot decrypt IV is null");
         if (_key == null)
@@ -138,41 +142,41 @@ public class Crypto
         }
     }
 
-    byte[] DecryptCfb(byte[] data)
-    {
-        if (_iv == null)
-            throw new Exception("Cannot decrypt IV is null");
-        if (_key == null)
-            throw new Exception("Cannot find key");
-
-        if (_first) //first block
-        {
-            return XorBytes(BlockCipherDecrypt(_iv), data);
-        }
-        else
-        {
-            return XorBytes(BlockCipherDecrypt(_save), data);
-        }
-    }
-
-    byte[] DecryptOfb(byte[] data)
-    {
-        if (_iv == null)
-            throw new Exception("Cannot decrypt IV is null");
-        if (_key == null)
-            throw new Exception("Cannot find key");
-
-        if (_first)
-        {
-            _save = BlockCipherDecrypt(_iv);
-            return XorBytes(data, _save);
-        }
-        else
-        {
-            _save = BlockCipherDecrypt(_save);
-            return XorBytes(data, _save);
-        }
-    }
+    // byte[] DecryptCfb(byte[] data)
+    // {
+    //     if (_iv == null)
+    //         throw new Exception("Cannot decrypt IV is null");
+    //     if (_key == null)
+    //         throw new Exception("Cannot find key");
+    //
+    //     if (_first)
+    //     {
+    //         return XorBytes(BlockCipherDecrypt(_iv), data);
+    //     }
+    //     else
+    //     {
+    //         return XorBytes(BlockCipherDecrypt(_save), data);
+    //     }
+    // }
+    //
+    // byte[] DecryptOfb(byte[] data)
+    // {
+    //     if (_iv == null)
+    //         throw new Exception("Cannot decrypt IV is null");
+    //     if (_key == null)
+    //         throw new Exception("Cannot find key");
+    //
+    //     if (_first)
+    //     {
+    //         _save = BlockCipherDecrypt(_iv);
+    //         return XorBytes(data, _save);
+    //     }
+    //     else
+    //     {
+    //         _save = BlockCipherDecrypt(_save);
+    //         return XorBytes(data, _save);
+    //     }
+    // }
 
     byte[] BlockCipherDecrypt(byte[] data)
     {
@@ -239,27 +243,38 @@ public class Crypto
     byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding) //обработка каждого блока
     {
         byte[] result = new byte[data.Length];
+
         Array.Copy(data, result, data.Length);
+        byte[] resultPadding = new byte[Const.AesMsgSize];
 
         if (isFinalBLock) //помнить про то, что нужно дополнять также и блок размером 16 
         {
-            //Modifies data
             if (padding == Padding.PKS7)
             {
-                result = Pks7(result);
+                if (data.Length == Const.AesMsgSize)
+                {
+                    for (int i = 0; i < result.Length; i++)
+                    {
+                        resultPadding[i] = (byte) (Const.AesMsgSize);
+                    }
+
+                    resultPadding = BlockCipherEncrypt(resultPadding);
+                }
+                else
+                {
+                    result = Pks7(result);
+                }
             }
         }
 
-        // передается только блок!
-
         if (_mode == Modes.ECB)
         {
-            return BlockCipherEncrypt(result);
+            result = BlockCipherEncrypt(result);
         }
 
         if (_mode == Modes.CBC)
         {
-            _save = EncryptCbc(result); //Как узнать что блок первый? 
+            _save = EncryptCbc(result);
             result = _save;
         }
 
@@ -282,7 +297,18 @@ public class Crypto
         {
             if (padding == Padding.NON)
             {
-                result = Non(result, data.Length);
+                return Non(result, data.Length);
+            }
+        }
+
+        if (isFinalBLock)
+        {
+            if (padding == Padding.PKS7)
+            {
+                if (data.Length == Const.AesMsgSize)
+                {
+                    return result.Concat(resultPadding).ToArray();
+                }
             }
         }
 
@@ -295,14 +321,10 @@ public class Crypto
             throw new Exception("Data length > 255 (huge length)");
 
         int oldLength = data.Length;
-        if (data.Length == Const.AesMsgSize)
-        {
-            Array.Resize(ref data, 2 * Const.AesMsgSize);
-        }
-        else
-        {
-            Array.Resize(ref data, Const.AesMsgSize);
-        }
+
+        int size = data.Length;
+
+        Array.Resize(ref data, Const.AesMsgSize);
 
         for (int i = oldLength; i < data.Length; i++)
         {
@@ -456,16 +478,15 @@ public class Crypto
     //TODo something wrong with this 2 fun
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
-        return Encoding.UTF8.GetBytes(msg);
+        return Encoding.ASCII.GetBytes(msg);
     }
 
     public string ByteToMsg(byte[] data)
     {
-        return BitConverter.ToString(data);
+        return Encoding.ASCII.GetString(data);
     }
 
     //Utilits generate key
-
     public byte[] GetIv()
     {
         return _iv;
