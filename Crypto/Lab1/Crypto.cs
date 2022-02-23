@@ -88,9 +88,7 @@ public class Crypto
         }
 
         if (_mode == Modes.ECB)
-        {
             return BlockCipherDecrypt(result);
-        }
 
         if (_mode == Modes.CBC)
         {
@@ -105,9 +103,7 @@ public class Crypto
         }
 
         if (_mode == Modes.OFB)
-        {
             result = EncryptOfb(result);
-        }
 
         if (_mode == Modes.CTR)
         {
@@ -151,7 +147,6 @@ public class Crypto
 
         if (_first) //first block
         {
-            
             return XorBytes(BlockCipherDecrypt(_iv), data);
         }
         else
@@ -166,7 +161,7 @@ public class Crypto
             throw new Exception("Cannot decrypt IV is null");
         if (_key == null)
             throw new Exception("Cannot find key");
-        
+
         if (_first)
         {
             _save = BlockCipherDecrypt(_iv);
@@ -205,9 +200,7 @@ public class Crypto
         if (data == null)
             throw new Exception("Data is empty...");
         if (iv != null)
-        {
             _iv = iv;
-        }
 
         var spanData = new Span<byte>(data);
         var result = new List<byte>();

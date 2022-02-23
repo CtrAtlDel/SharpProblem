@@ -12,7 +12,6 @@ namespace CryptoLab
     {
         static void printArray(byte[] data)
         {
-            Console.Out.WriteLine("Array: ");
             for (int i = 0; i < data.Length; i++)
             {
                 Console.Out.Write($"{data[i]} ");
@@ -23,13 +22,14 @@ namespace CryptoLab
 
         static void testEcb() // done.
         {
+            Console.Out.WriteLine("Test ECB");
             var crypter = new Crypto();
             crypter.SetMode("ECB");
             var key = crypter.GenerateKey();
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
             byte[] data =
                 crypter.MsgToByte(
-                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+                    "0ec7702330098ce7"); //"f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
             crypter.SetKey(key);
             Console.Out.WriteLine("Data: ");
             Console.Out.WriteLine(crypter.ByteToMsg(data).Replace("-", ""));
@@ -45,12 +45,15 @@ namespace CryptoLab
             Console.WriteLine("Decrypt: ");
             Console.WriteLine(decryptString.Replace("-", ""));
             Console.WriteLine();
+            Console.Out.WriteLine("Data:");
             printArray(data);
+            Console.Out.WriteLine("Decrypt:");
             printArray(decryptByte);
         }
 
         static void testCbc() //done.
         {
+            Console.Out.WriteLine("Test CBC");
             var crypter = new Crypto();
             crypter.SetMode("CBC");
             var key = crypter.GenerateKey();
@@ -65,13 +68,16 @@ namespace CryptoLab
             Console.WriteLine();
             var encryptBytes = crypter.Encrypt(data);
             var decryptBytes = crypter.Decrypt(encryptBytes);
+            Console.Out.WriteLine("Data:");
             printArray(data);
+            Console.Out.WriteLine("Decrypt:");
             printArray(decryptBytes);
             Console.Out.WriteLine("");
         }
 
         static void testCfb() // done.
         {
+            Console.Out.WriteLine("Test CFB");
             var crypter = new Crypto();
             crypter.SetMode("CFB");
             var key = crypter.GenerateKey();
@@ -91,6 +97,7 @@ namespace CryptoLab
 
         static void testOfb() // done.
         {
+            Console.Out.WriteLine("Test OFB");
             var crypter = new Crypto();
             crypter.SetMode("OFB");
             var key = crypter.GenerateKey();
@@ -111,9 +118,9 @@ namespace CryptoLab
         public static void Main(string[] args)
         {
             var crypter = new Crypto();
-            // testEcb();
-            // testCbc();
-            // testCfb();
+            testEcb();
+            testCbc();
+            testCfb();
             testOfb();
         }
     }
