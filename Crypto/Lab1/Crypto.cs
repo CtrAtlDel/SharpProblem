@@ -429,6 +429,8 @@ public class Crypto
             _iv[j] = 0;
             ++j;
         }
+
+        return _iv;
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
