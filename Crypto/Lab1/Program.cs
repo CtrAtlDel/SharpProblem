@@ -25,7 +25,7 @@ namespace CryptoLab
             Console.Out.WriteLine("Test ECB");
             var crypter = new Crypto();
             crypter.SetMode("ECB");
-            var key = crypter.GenerateKey();
+            var key = crypter.GenerateRandom(Const.AesMsgSize);
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
             byte[] data =
                 crypter.MsgToByte(
@@ -56,11 +56,6 @@ namespace CryptoLab
             Console.Out.WriteLine("Test CBC");
             var crypter = new Crypto();
             crypter.SetMode("CBC");
-            // var key = crypter.GenerateKey();
-            // Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            // byte[] data =
-            // crypter.MsgToByte(
-            // "4ca00ff4c898d61e1edbf1800618fb2828a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c6822236e1daafb94ffe0c5da05d9476be028ad7c1d81");
             byte[] key =
             {
                 0x14, 0x0b, 0x41, 0xb2, 0x2a, 0x29, 0xbe, 0xb4, 0x06, 0x1b, 0xda, 0x66, 0xb6, 0x74, 0x7e, 0x14
@@ -74,12 +69,6 @@ namespace CryptoLab
                 0x6e, 0x21, 0x36, 0x4b, 0x0c, 0x37, 0x4d, 0xf4, 0x55, 0x03, 0x47, 0x3c, 0x52, 0x42, 0xa2, 0x53
 
             };
-
-            // string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
-            // Console.WriteLine(answerString.Replace("-", ""));
-            // Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
-            // Console.WriteLine();
-            // var encryptBytes = crypter.Encrypt(data);
             var IV = new Span<byte>(data);
             var decryptBytes = crypter.Decrypt(data, IV.Slice(0, Const.AesMsgSize).ToArray());
             Console.Out.WriteLine(crypter.ByteToMsg(decryptBytes));
@@ -95,7 +84,7 @@ namespace CryptoLab
             Console.Out.WriteLine("Test CFB");
             var crypter = new Crypto();
             crypter.SetMode("CFB");
-            var key = crypter.GenerateKey();
+            var key = crypter.GenerateRandom(Const.AesMsgSize);
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
             byte[] data =
                 crypter.MsgToByte(
@@ -115,7 +104,7 @@ namespace CryptoLab
             Console.Out.WriteLine("Test OFB");
             var crypter = new Crypto();
             crypter.SetMode("OFB");
-            var key = crypter.GenerateKey();
+            var key = crypter.GenerateRandom(Const.AesMsgSize);
             Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
             byte[] data =
                 crypter.MsgToByte(

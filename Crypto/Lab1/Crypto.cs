@@ -23,7 +23,9 @@ public class Padding
 public class Const
 {
     public const int AesKeySize = 16; // 16 byte 128 bit max AES key
-    public const int AesMsgSize = 16; // 
+    public const int AesMsgSize = 16; //
+    public const int AesNonceSize = 4;
+    public const int AesIvSize = 16;
     public const int SizeMode = 5; // count of modes
 }
 
@@ -36,6 +38,8 @@ public class Crypto
     private byte[] _iv = null;
 
     private int _counter = 0; // size is 128 bits -> 4 bytes
+
+    private byte[] _nonce = null;
 
     private byte[] _save = null;
 
@@ -125,7 +129,6 @@ public class Crypto
 
     byte[] DecryptCbc(byte[] data)
     {
-        
         if (_iv == null)
             throw new Exception("Cannot decrypt IV is null");
         if (_key == null)
@@ -291,6 +294,8 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
+            result = EncryptCtr(result);
+            //todo ++ iv
         }
 
         if (isFinalBLock)
@@ -386,7 +391,44 @@ public class Crypto
 
     byte[] EncryptCtr(byte[] data)
     {
-        return data;
+        if (_iv == null)
+        {
+            GenerateIv();
+            GenerateNonce();
+            _iv = CreateIvNonce();
+            _counter = 1;
+            return XorBytes(data, BlockCipherEncrypt(_iv));
+        }
+        var byteCounter = BitConverter.GetBytes(_counter);
+        int j = 0;
+        for (int i = Const.AesMsgSize - Const.AesIvSize - 1; i < Const.AesMsgSize; i++)
+        {
+            _iv[i] = byteCounter[j];
+            ++j;
+        }
+        
+        // return 
+    }
+
+    byte[] ChangeIv()
+    {
+        
+    }
+
+    byte[] CreateIvNonce()
+    {
+        if (_iv == null)
+            throw new Exception("Iv is empty...");
+        if (_nonce == null)
+            throw new Exception("Nonce is empty...");
+        
+        int j = 0;
+        for (int i = Const.AesNonceSize - 1; i > 0; i++)
+        {
+            _iv[i] = _nonce[i];
+            _iv[j] = 0;
+            ++j;
+        }
     }
 
     byte[] XorBytes(byte[] first, byte[] second)
@@ -492,9 +534,16 @@ public class Crypto
         return _iv;
     }
 
-    public byte[] GenerateKey()
+    private void GenerateNonce()
     {
-        byte[] bytes = new byte[16];
+        _nonce = GenerateRandom(Const.AesMsgSize);
+    }
+
+    public byte[] GenerateRandom(int length)
+    {
+        if (length < 0)
+            throw new Exception("Length < 0 ");
+        byte[] bytes = new byte[length];
         var rng = new RNGCryptoServiceProvider();
         rng.GetBytes(bytes);
         return bytes;
