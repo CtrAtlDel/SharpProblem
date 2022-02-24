@@ -406,14 +406,14 @@ public class Crypto
             _iv[i] = byteCounter[j];
             ++j;
         }
-        
-        // return 
+
+        return XorBytes(BlockCipherEncrypt(_iv), data);
     }
 
-    byte[] ChangeIv()
-    {
-        
-    }
+    // byte[] ChangeIv()
+    // {
+    //     
+    // }
 
     byte[] CreateIvNonce()
     {
