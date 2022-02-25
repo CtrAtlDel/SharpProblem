@@ -54,7 +54,12 @@ public class Crypto
         var result = new List<byte>();
 
         _first = true;
-        for (int i = 0; i < CountOfBlocks(data.Length); i++)
+        int i = 0;
+        if (_mode == Modes.CTR && iv != null)
+        {
+            i = 1;
+        }
+        for (; i < CountOfBlocks(data.Length); i++)
         {
             if (i == 0) //chek this
                 _first = true;
@@ -75,7 +80,7 @@ public class Crypto
 
         return result.ToArray();
     }
-    
+
     byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBLock, string padding)
     {
         byte[] result = new byte[data.Length];
@@ -112,11 +117,8 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
-            result = DecryptCtr(result);
-            if (!_first)
-            {
-                IncrementAtIndex(_iv, Const.AesIvSize - 1);
-            }
+            result = EncryptCtr(result);
+            IncrementAtIndex(_iv, Const.AesIvSize - 1);
         }
 
         if (isFinalBLock)
@@ -127,20 +129,23 @@ public class Crypto
                 var spanData = new Span<byte>(result);
                 return spanData.Slice(0, spanData.Length - counter).ToArray();
             }
+
+            if (_mode == Modes.CTR)
+                ClearCtr();
         }
 
         return result;
     }
+
     //TODO delete this
     public void ClearCtr()
     {
         if (_iv == null)
             return;
-        for (int i = Const.AesMsgSize - 1 - Const.AesNonceSize; i < Const.AesMsgSize; i++)
+        for (int i = Const.AesMsgSize - Const.AesNonceSize; i < Const.AesMsgSize; i++)
         {
             _iv[i] = 0;
         }
-        
     }
 
     byte[] DecryptCbc(byte[] data)
@@ -161,42 +166,6 @@ public class Crypto
         }
     }
 
-    // byte[] DecryptCfb(byte[] data)
-    // {
-    //     if (_iv == null)
-    //         throw new Exception("Cannot decrypt IV is null");
-    //     if (_key == null)
-    //         throw new Exception("Cannot find key");
-    //
-    //     if (_first)
-    //     {
-    //         return XorBytes(BlockCipherDecrypt(_iv), data);
-    //     }
-    //     else
-    //     {
-    //         return XorBytes(BlockCipherDecrypt(_save), data);
-    //     }
-    // }
-    //
-    // byte[] DecryptOfb(byte[] data)
-    // {
-    //     if (_iv == null)
-    //         throw new Exception("Cannot decrypt IV is null");
-    //     if (_key == null)
-    //         throw new Exception("Cannot find key");
-    //
-    //     if (_first)
-    //     {
-    //         _save = BlockCipherDecrypt(_iv);
-    //         return XorBytes(data, _save);
-    //     }
-    //     else
-    //     {
-    //         _save = BlockCipherDecrypt(_save);
-    //         return XorBytes(data, _save);
-    //     }
-    // }
-
     byte[] DecryptCtr(byte[] data)
     {
         if (_iv == null)
@@ -204,10 +173,10 @@ public class Crypto
             GenerateIv();
             GenerateNonce();
             _iv = CreateIvNonce();
-            return XorBytes(data, BlockCipherDecrypt(_iv));
+            return XorBytes(data, BlockCipherEncrypt(_iv));
         }
 
-        return XorBytes(data, BlockCipherDecrypt(_iv));
+        return XorBytes(data, BlockCipherEncrypt(_iv));
     }
 
     byte[] BlockCipherDecrypt(byte[] data)
@@ -390,7 +359,10 @@ public class Crypto
 
     byte[] EncryptCfb(byte[] data)
     {
-        if (_iv == null || _first) //first blocok
+        if (_key == null)
+            throw new Exception("Cannot find key");
+        
+        if (_iv == null || _first) 
         {
             if (_iv == null)
                 GenerateIv();
@@ -404,6 +376,9 @@ public class Crypto
 
     byte[] EncryptOfb(byte[] data)
     {
+        if (_key == null)
+            throw new Exception("Cannot find key");
+        
         if (_iv == null || _first)
         {
             if (_iv == null)
@@ -568,7 +543,7 @@ public class Crypto
     {
         if (_iv == null)
             throw new Exception("Iv is empty");
-        
+
         return _iv;
     }
 

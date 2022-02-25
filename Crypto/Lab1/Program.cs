@@ -46,10 +46,10 @@ namespace CryptoLab
             Console.WriteLine("Decrypt: ");
             Console.WriteLine(decryptString.Replace("-", ""));
             Console.WriteLine();
-            Console.Out.WriteLine("Data:");
-            printArray(data);
-            Console.Out.WriteLine("Decrypt:");
-            printArray(decryptByte);
+            // Console.Out.WriteLine("Data:");
+            // printArray(data);
+            // Console.Out.WriteLine("Decrypt:");
+            // printArray(decryptByte);
         }
 
         static void testCbc() //done.
@@ -95,7 +95,8 @@ namespace CryptoLab
             Console.WriteLine(answerString.Replace("-", ""));
             Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
             Console.WriteLine();
-            var decryptByte = crypter.Decrypt(crypter.Encrypt(data));
+            var newData = crypter.Encrypt(data);
+            var decryptByte = crypter.Decrypt(newData);
             printArray(data);
             printArray(decryptByte);
         }
@@ -127,33 +128,44 @@ namespace CryptoLab
             crypter.SetMode("CTR");
             byte[] key =
                 {0x36, 0xf1, 0x83, 0x57, 0xbe, 0x4d, 0xbd, 0x77, 0xf0, 0x50, 0x51, 0x5c, 0x73, 0xfc, 0xf9, 0xf2};
-
-            Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            var data =
-                crypter.MsgToByte(
-                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5fa19309183091297ad97ef79d59ce29f5f51eeca32eabedd9afa93299");
             crypter.SetKey(key);
+            byte[] data =
+            {
+                0x77, 0x0b, 0x80, 0x25, 0x9e, 0xc3, 0x3b, 0xeb, 0x25, 0x61, 0x35, 0x8a, 0x9f, 0x2d, 0xc6, 0x17, 
+                0xe4, 0x62, 0x18, 0xc0, 0xa5, 0x3c, 0xbe, 0xca, 0x69, 0x5a, 0xe4, 0x5f, 0xaa, 0x89, 0x52, 0xaa, 
+                0x0e, 0x31, 0x1b, 0xde, 0x9d, 0x4e, 0x01, 0x72, 0x6d, 0x31, 0x84, 0xc3, 0x44, 0x51
+
+            };
+            // Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
+            // var data =
+            //     crypter.MsgToByte(
+            //         "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5fa19309183091297ad97ef79d59ce29f5f51eeca32eabedd9afa93299");
             
             Console.Out.WriteLine("Data:");
             printArray(data);
-            Console.Out.WriteLine("Encrypt:");
-            var encrypt = crypter.Encrypt(data);
-            printArray(encrypt);
-            crypter.ClearCtr();
-            Console.Out.WriteLine("Decrypt:");
-            var decrypt = crypter.Decrypt(encrypt);
-            printArray(decrypt);
-            printArray(crypter.GetIv());
+            var spanData = new Span<byte>(data);
+            var decryptData = crypter.Decrypt(data, spanData.Slice(0, Const.AesMsgSize).ToArray());
+            printArray(decryptData);
+            Console.Out.WriteLine(crypter.ByteToMsg(decryptData));
+            
+            // Console.Out.WriteLine("Encrypt:");
+            // var encrypt = crypter.Encrypt(data);
+            // printArray(crypter.GetIv());
+            // crypter.ClearCtr();
+            // Console.Out.WriteLine("Decrypt:");
+            // var decrypt = crypter.Decrypt(encrypt);
+            // printArray(decrypt);
+            // printArray(crypter.GetIv());
         }
 
         public static void Main(string[] args)
         {
             var crypter = new Crypto();
-            // testEcb();
-            // testCbc();
-            // testCfb();
+            testEcb();
+            testCbc();
+            testCfb();
             // testOfb();
-            testCtr();
+            // testCtr();
         }
     }
 };
