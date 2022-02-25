@@ -25,7 +25,6 @@ public class Const
     public const int AesMsgSize = 16; //
     public const int AesNonceSize = 4;
     public const int AesIvSize = 16;
-    public const int SizeMode = 5; // count of modes
 }
 
 public class Crypto
@@ -116,7 +115,7 @@ public class Crypto
         if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
-            IncrementAtIndex(_iv, Const.AesIvSize - 1);
+            IncrementIv(_iv, Const.AesIvSize - 1);
         }
 
         if (isFinalBLock)
@@ -278,7 +277,7 @@ public class Crypto
         if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
-            IncrementAtIndex(_iv, Const.AesMsgSize - 1);
+            IncrementIv(_iv, Const.AesMsgSize - 1);
         }
 
         if (isFinalBLock)
@@ -306,9 +305,7 @@ public class Crypto
     byte[] Pks7(byte[] data)
     {
         int oldLength = data.Length;
-
-        int size = data.Length;
-
+        
         Array.Resize(ref data, Const.AesMsgSize);
 
         for (int i = oldLength; i < data.Length; i++)
@@ -386,20 +383,20 @@ public class Crypto
         return XorBytes(data, BlockCipherEncrypt(_iv));
     }
 
-    public static void IncrementAtIndex(byte[] array, int index)
+    static void IncrementIv(byte[] dataBytes, int index)
     {
         if (index < 0)
             throw new Exception("Index out of range...");
 
-        if (array[index] == byte.MaxValue)
+        if (dataBytes[index] == byte.MaxValue)
         {
-            array[index] = 0;
+            dataBytes[index] = 0;
             if (index > 0)
-                IncrementAtIndex(array, index - 1);
+                IncrementIv(dataBytes, index - 1);
         }
         else
         {
-            array[index]++;
+            dataBytes[index]++;
         }
     }
 
@@ -432,7 +429,7 @@ public class Crypto
         return result;
     }
 
-    void GenerateIv() // sizeIV = sizeDataBlock it is 
+    void GenerateIv() 
     {
         using (var myRj = new AesCryptoServiceProvider())
         {
