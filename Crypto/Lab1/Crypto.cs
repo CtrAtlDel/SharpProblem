@@ -75,7 +75,7 @@ public class Crypto
 
         return result.ToArray();
     }
-
+    
     byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBLock, string padding)
     {
         byte[] result = new byte[data.Length];
@@ -113,7 +113,10 @@ public class Crypto
         if (_mode == Modes.CTR)
         {
             result = DecryptCtr(result);
-            IncrementAtIndex(_iv, Const.AesIvSize - 1);
+            if (!_first)
+            {
+                IncrementAtIndex(_iv, Const.AesIvSize - 1);
+            }
         }
 
         if (isFinalBLock)
@@ -127,6 +130,17 @@ public class Crypto
         }
 
         return result;
+    }
+    //TODO delete this
+    public void ClearCtr()
+    {
+        if (_iv == null)
+            return;
+        for (int i = Const.AesMsgSize - 1 - Const.AesNonceSize; i < Const.AesMsgSize; i++)
+        {
+            _iv[i] = 0;
+        }
+        
     }
 
     byte[] DecryptCbc(byte[] data)
@@ -243,7 +257,7 @@ public class Crypto
                 result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
             }
         }
-        
+
         _first = false;
         return result.ToArray();
     }
@@ -258,7 +272,7 @@ public class Crypto
         return data.Slice(index * Const.AesMsgSize, Const.AesMsgSize).ToArray();
     }
 
-    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding) //обработка каждого блока
+    byte[] ProcessBlockEncrypt(byte[] data, bool isFinalBLock, string padding)
     {
         byte[] result = new byte[data.Length];
 
@@ -416,15 +430,20 @@ public class Crypto
 
         return XorBytes(data, BlockCipherEncrypt(_iv));
     }
-    
+
     public static void IncrementAtIndex(byte[] array, int index)
     {
-        if (array[index] == byte.MaxValue) {
+        if (index < 0)
+            throw new Exception("Index out of range...");
+
+        if (array[index] == byte.MaxValue)
+        {
             array[index] = 0;
-            if(index > 0)
+            if (index > 0)
                 IncrementAtIndex(array, index - 1);
         }
-        else {
+        else
+        {
             array[index]++;
         }
     }
@@ -435,7 +454,7 @@ public class Crypto
             throw new Exception("Iv is empty...");
         if (_nonce == null)
             throw new Exception("Nonce is empty...");
-        
+
         int j = Const.AesIvSize - 1;
         for (int i = Const.AesNonceSize - 1; i >= 0; i--)
         {
@@ -536,17 +555,20 @@ public class Crypto
     //TODo something wrong with this 2 fun
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
-        return Encoding.ASCII.GetBytes(msg);
+        return Encoding.UTF8.GetBytes(msg);
     }
 
     public string ByteToMsg(byte[] data)
     {
-        return Encoding.ASCII.GetString(data);
+        return Encoding.UTF8.GetString(data);
     }
 
     //Utilits generate key
     public byte[] GetIv()
     {
+        if (_iv == null)
+            throw new Exception("Iv is empty");
+        
         return _iv;
     }
 
