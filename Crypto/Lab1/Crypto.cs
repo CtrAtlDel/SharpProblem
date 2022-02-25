@@ -228,7 +228,7 @@ public class Crypto
                 result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
             }
         }
-
+        
         _first = false;
         return result.ToArray();
     }
@@ -294,8 +294,7 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
-            result = EncryptCtr(result);
-            //todo ++ iv
+            // result = EncryptCtr(result);
         }
 
         if (isFinalBLock)
@@ -399,21 +398,21 @@ public class Crypto
             _counter = 1;
             return XorBytes(data, BlockCipherEncrypt(_iv));
         }
-        var byteCounter = BitConverter.GetBytes(_counter);
-        int j = 0;
-        for (int i = Const.AesMsgSize - Const.AesIvSize - 1; i < Const.AesMsgSize; i++)
-        {
-            _iv[i] = byteCounter[j];
-            ++j;
-        }
-
-        return XorBytes(BlockCipherEncrypt(_iv), data);
+        
+        
     }
-
-    // byte[] ChangeIv()
-    // {
-    //     
-    // }
+    
+    public static void IncrementAtIndex(byte[] array, int index)
+    {
+        if (array[index] == byte.MaxValue) {
+            array[index] = 0;
+            if(index > 0)
+                IncrementAtIndex(array, index - 1);
+        }
+        else {
+            array[index]++;
+        }
+    }
 
     byte[] CreateIvNonce()
     {
@@ -423,7 +422,7 @@ public class Crypto
             throw new Exception("Nonce is empty...");
         
         int j = 0;
-        for (int i = Const.AesNonceSize - 1; i > 0; i++)
+        for (int i = Const.AesNonceSize - 1; i >= 0; i--)
         {
             _iv[i] = _nonce[i];
             _iv[j] = 0;
@@ -522,12 +521,12 @@ public class Crypto
     //TODo something wrong with this 2 fun
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
-        return Encoding.ASCII.GetBytes(msg);
+        return Encoding.UTF8.GetBytes(msg);
     }
 
     public string ByteToMsg(byte[] data)
     {
-        return Encoding.ASCII.GetString(data);
+        return Encoding.UTF8.GetString(data);
     }
 
     //Utilits generate key

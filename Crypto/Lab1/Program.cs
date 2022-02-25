@@ -119,13 +119,36 @@ namespace CryptoLab
             printArray(decrypt);
         }
 
+        static void testCtr()
+        {
+            Console.Out.WriteLine("Test OFB");
+            var crypter = new Crypto();
+            crypter.SetMode("CTR");
+            var key = crypter.GenerateRandom(Const.AesMsgSize);
+            Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
+            byte[] data =
+                crypter.MsgToByte(
+                    "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5f7ad97ef79d59ce29f5f51eeca32eabedd9afa9329");
+            crypter.SetKey(key);
+            var crypterSns = crypter.Encrypt(data);
+            printArray(crypterSns);
+            // string answerString = crypter.ByteToMsg(crypter.Encrypt(data));
+            // Console.WriteLine(answerString.Replace("-", ""));
+            // Console.WriteLine("Iv is " + crypter.ByteToMsg(crypter.GetIv()).Replace("-", ""));
+            // Console.WriteLine();
+            // var decrypt = crypter.Decrypt(crypter.Encrypt(data));
+            // printArray(data);
+            // printArray(decrypt);
+        }
+
         public static void Main(string[] args)
         {
             var crypter = new Crypto();
             // testEcb();
-            testCbc();
+            // testCbc();
             // testCfb();
             // testOfb();
+            testCtr();
         }
     }
 };
