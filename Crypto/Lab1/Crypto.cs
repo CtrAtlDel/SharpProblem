@@ -29,13 +29,11 @@ public class Const
 
 public class Crypto
 {
-    private string _mode = Modes.Ecb;
+    private string _mode = Modes.Ecb; //default value
 
     private byte[] _key = null;
 
     private byte[] _iv = null;
-
-    private int _counter = 0;
 
     private byte[] _nonce = null;
 
@@ -135,7 +133,7 @@ public class Crypto
     }
 
     //TODO delete this
-    public void ClearCtr()
+    private void ClearCtr()
     {
         if (_iv == null)
             return;
@@ -156,11 +154,10 @@ public class Crypto
         {
             return XorBytes(BlockCipherDecrypt(data), _iv);
         }
-        else
-        {
-            byte[] tmp = data;
-            return XorBytes(BlockCipherDecrypt(data), _save);
-        }
+
+        byte[] tmp = data;
+
+        return XorBytes(BlockCipherDecrypt(data), _save);
     }
 
     byte[] BlockCipherDecrypt(byte[] data)
@@ -305,7 +302,7 @@ public class Crypto
     byte[] Pks7(byte[] data)
     {
         int oldLength = data.Length;
-        
+
         Array.Resize(ref data, Const.AesMsgSize);
 
         for (int i = oldLength; i < data.Length; i++)
@@ -316,7 +313,7 @@ public class Crypto
         return data;
     }
 
-    byte[] Non(byte[] data, int length)
+    static byte[] Non(byte[] data, int length)
     {
         var list = new Span<byte>(data);
         return list.Slice(0, length).ToArray();
@@ -345,10 +342,8 @@ public class Crypto
                 GenerateIv();
             return XorBytes(data, BlockCipherEncrypt(_iv));
         }
-        else
-        {
-            return XorBytes(data, BlockCipherEncrypt(_save));
-        }
+
+        return XorBytes(data, BlockCipherEncrypt(_save));
     }
 
     byte[] EncryptOfb(byte[] data)
@@ -363,11 +358,9 @@ public class Crypto
             _save = BlockCipherEncrypt(_iv);
             return XorBytes(data, _save);
         }
-        else
-        {
-            _save = BlockCipherEncrypt(_save);
-            return XorBytes(data, _save);
-        }
+
+        _save = BlockCipherEncrypt(_save);
+        return XorBytes(data, _save);
     }
 
     byte[] EncryptCtr(byte[] data)
@@ -395,9 +388,7 @@ public class Crypto
                 IncrementIv(dataBytes, index - 1);
         }
         else
-        {
             dataBytes[index]++;
-        }
     }
 
     byte[] CreateIvNonce()
@@ -422,14 +413,11 @@ public class Crypto
     {
         var result = new byte[first.Length];
         for (int i = 0; i < first.Length; i++)
-        {
             result[i] = (byte) (first[i] ^ second[i]);
-        }
-
         return result;
     }
 
-    void GenerateIv() 
+    void GenerateIv()
     {
         using (var myRj = new AesCryptoServiceProvider())
         {
@@ -442,7 +430,6 @@ public class Crypto
     {
         if (index == CountOfBlocks(data.Length) - 1)
             return true;
-
         return false;
     }
 
@@ -461,8 +448,7 @@ public class Crypto
         if (this._key.Length == 0)
             throw new Exception("Key is empty");
 
-        byte[] resultCipher = new byte[Const.AesKeySize];
-
+        var resultCipher = new byte[Const.AesKeySize];
         using (Aes aes = new AesCryptoServiceProvider())
         {
             aes.Mode = CipherMode.ECB;
@@ -502,7 +488,7 @@ public class Crypto
             throw new Exception("You mode is not declarated");
         }
     }
-    
+
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
