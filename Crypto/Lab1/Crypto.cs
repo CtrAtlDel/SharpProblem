@@ -112,6 +112,8 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
+            result = DecryptCtr(result);
+            IncrementAtIndex(_iv, Const.AesIvSize - 1);
         }
 
         if (isFinalBLock)
@@ -180,6 +182,19 @@ public class Crypto
     //         return XorBytes(data, _save);
     //     }
     // }
+
+    byte[] DecryptCtr(byte[] data)
+    {
+        if (_iv == null)
+        {
+            GenerateIv();
+            GenerateNonce();
+            _iv = CreateIvNonce();
+            return XorBytes(data, BlockCipherDecrypt(_iv));
+        }
+
+        return XorBytes(data, BlockCipherDecrypt(_iv));
+    }
 
     byte[] BlockCipherDecrypt(byte[] data)
     {
@@ -294,7 +309,8 @@ public class Crypto
 
         if (_mode == Modes.CTR)
         {
-            // result = EncryptCtr(result);
+            result = EncryptCtr(result);
+            IncrementAtIndex(_iv, Const.AesMsgSize - 1);
         }
 
         if (isFinalBLock)
@@ -395,11 +411,10 @@ public class Crypto
             GenerateIv();
             GenerateNonce();
             _iv = CreateIvNonce();
-            _counter = 1;
             return XorBytes(data, BlockCipherEncrypt(_iv));
         }
-        
-        
+
+        return XorBytes(data, BlockCipherEncrypt(_iv));
     }
     
     public static void IncrementAtIndex(byte[] array, int index)
@@ -421,12 +436,12 @@ public class Crypto
         if (_nonce == null)
             throw new Exception("Nonce is empty...");
         
-        int j = 0;
+        int j = Const.AesIvSize - 1;
         for (int i = Const.AesNonceSize - 1; i >= 0; i--)
         {
             _iv[i] = _nonce[i];
             _iv[j] = 0;
-            ++j;
+            --j;
         }
 
         return _iv;
@@ -521,12 +536,12 @@ public class Crypto
     //TODo something wrong with this 2 fun
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
-        return Encoding.UTF8.GetBytes(msg);
+        return Encoding.ASCII.GetBytes(msg);
     }
 
     public string ByteToMsg(byte[] data)
     {
-        return Encoding.UTF8.GetString(data);
+        return Encoding.ASCII.GetString(data);
     }
 
     //Utilits generate key
@@ -537,7 +552,7 @@ public class Crypto
 
     private void GenerateNonce()
     {
-        _nonce = GenerateRandom(Const.AesMsgSize);
+        _nonce = GenerateRandom(Const.AesNonceSize);
     }
 
     public byte[] GenerateRandom(int length)
