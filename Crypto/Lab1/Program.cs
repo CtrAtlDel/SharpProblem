@@ -21,7 +21,7 @@ namespace CryptoLab
             Console.Out.WriteLine("");
         }
 
-        static void testEcb() // done.
+        static void testEcb() 
         {
             Console.Out.WriteLine("Test ECB");
             var crypter = new Crypto();
@@ -46,13 +46,9 @@ namespace CryptoLab
             Console.WriteLine("Decrypt: ");
             Console.WriteLine(decryptString.Replace("-", ""));
             Console.WriteLine();
-            // Console.Out.WriteLine("Data:");
-            // printArray(data);
-            // Console.Out.WriteLine("Decrypt:");
-            // printArray(decryptByte);
         }
 
-        static void testCbc() //done.
+        static void testCbc() 
         {
             Console.Out.WriteLine("Test CBC");
             var crypter = new Crypto();
@@ -61,7 +57,6 @@ namespace CryptoLab
             {
                 0x14, 0x0b, 0x41, 0xb2, 0x2a, 0x29, 0xbe, 0xb4, 0x06, 0x1b, 0xda, 0x66, 0xb6, 0x74, 0x7e, 0x14
             };
-            // Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
             crypter.SetKey(key);
             byte[] data =
             {
@@ -80,7 +75,7 @@ namespace CryptoLab
             Console.Out.WriteLine("");
         }
 
-        static void testCfb() // done.
+        static void testCfb()
         {
             Console.Out.WriteLine("Test CFB");
             var crypter = new Crypto();
@@ -101,7 +96,7 @@ namespace CryptoLab
             printArray(decryptByte);
         }
 
-        static void testOfb() // done.
+        static void testOfb()
         {
             Console.Out.WriteLine("Test OFB");
             var crypter = new Crypto();
@@ -136,36 +131,26 @@ namespace CryptoLab
                 0x0e, 0x31, 0x1b, 0xde, 0x9d, 0x4e, 0x01, 0x72, 0x6d, 0x31, 0x84, 0xc3, 0x44, 0x51
 
             };
-            // Console.WriteLine("Key is " + crypter.ByteToMsg(key).Replace("-", ""));
-            // var data =
-            //     crypter.MsgToByte(
-            //         "0ec7702330098ce7f7520d1cbbb20fc388d1b0adb5054dbd7370849dbf0b88d393f252e764f1f5fa19309183091297ad97ef79d59ce29f5f51eeca32eabedd9afa93299");
-            
             Console.Out.WriteLine("Data:");
             printArray(data);
             var spanData = new Span<byte>(data);
             var decryptData = crypter.Decrypt(data, spanData.Slice(0, Const.AesMsgSize).ToArray());
             printArray(decryptData);
             Console.Out.WriteLine(crypter.ByteToMsg(decryptData));
-            
-            // Console.Out.WriteLine("Encrypt:");
-            // var encrypt = crypter.Encrypt(data);
-            // printArray(crypter.GetIv());
-            // crypter.ClearCtr();
-            // Console.Out.WriteLine("Decrypt:");
-            // var decrypt = crypter.Decrypt(encrypt);
-            // printArray(decrypt);
-            // printArray(crypter.GetIv());
         }
 
         public static void Main(string[] args)
         {
             var crypter = new Crypto();
+            var rand = new Random();
+            var condition = rand.NextDouble() > 0.5;
+
+            int? x = condition ? 12 : null;
             testEcb();
             testCbc();
             testCfb();
-            // testOfb();
-            // testCtr();
+            testOfb();
+            testCtr();
         }
     }
 };

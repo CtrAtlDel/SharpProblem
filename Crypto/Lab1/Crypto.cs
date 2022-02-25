@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -7,17 +6,17 @@ namespace CryptoLab;
 /*IV генерируется один раз для одного подключения*/
 public class Modes
 {
-    public const string ECB = "ECB";
-    public const string CBC = "CBC";
-    public const string CFB = "CFB";
-    public const string OFB = "OFB";
-    public const string CTR = "CTR";
+    public const string Ecb = "ECB";
+    public const string Cbc = "CBC";
+    public const string Cfb = "CFB";
+    public const string Ofb = "OFB";
+    public const string Ctr = "CTR";
 }
 
 public class Padding
 {
-    public const string PKS7 = "PKS7";
-    public const string NON = "NON";
+    public const string Pks7 = "PKS7";
+    public const string Non = "NON";
 }
 
 public class Const
@@ -31,13 +30,13 @@ public class Const
 
 public class Crypto
 {
-    private string _mode = Modes.ECB; //CT CBC CFB ECB OF
+    private string _mode = Modes.Ecb;
 
     private byte[] _key = null;
 
     private byte[] _iv = null;
 
-    private int _counter = 0; // size is 128 bits -> 4 bytes
+    private int _counter = 0;
 
     private byte[] _nonce = null;
 
@@ -47,6 +46,7 @@ public class Crypto
 
     public byte[] Decrypt(byte[] data, byte[] iv = null)
     {
+        //first 16 byte is IV vector
         if (iv != null)
             _iv = iv;
 
@@ -55,24 +55,22 @@ public class Crypto
 
         _first = true;
         int i = 0;
-        if (_mode == Modes.CTR && iv != null)
+        if (_mode == Modes.Ctr && iv != null)
         {
             i = 1;
         }
+
         for (; i < CountOfBlocks(data.Length); i++)
         {
-            if (i == 0) //chek this
-                _first = true;
-            else
-                _first = false;
+            _first = i == 0;
 
-            if (this._mode == Modes.ECB || this._mode == Modes.CBC)
+            if (_mode == Modes.Ecb || _mode == Modes.Cbc)
             {
-                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.PKS7));
+                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Pks7));
             }
             else
             {
-                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
+                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Non));
             }
         }
 
@@ -88,7 +86,7 @@ public class Crypto
 
         if (isFinalBLock)
         {
-            if (padding == Padding.PKS7)
+            if (padding == Padding.Pks7)
             {
                 if (data[Const.AesMsgSize - 1] == Const.AesMsgSize)
                 {
@@ -97,25 +95,25 @@ public class Crypto
             }
         }
 
-        if (_mode == Modes.ECB)
+        if (_mode == Modes.Ecb)
             result = BlockCipherDecrypt(result);
 
-        if (_mode == Modes.CBC)
+        if (_mode == Modes.Cbc)
         {
             result = DecryptCbc(result);
             _save = data;
         }
 
-        if (_mode == Modes.CFB)
+        if (_mode == Modes.Cfb)
         {
             result = EncryptCfb(result);
             _save = data;
         }
 
-        if (_mode == Modes.OFB)
+        if (_mode == Modes.Ofb)
             result = EncryptOfb(result);
 
-        if (_mode == Modes.CTR)
+        if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
             IncrementAtIndex(_iv, Const.AesIvSize - 1);
@@ -123,14 +121,14 @@ public class Crypto
 
         if (isFinalBLock)
         {
-            if (padding == Padding.PKS7)
+            if (padding == Padding.Pks7)
             {
                 var counter = result[Const.AesMsgSize - 1];
                 var spanData = new Span<byte>(result);
                 return spanData.Slice(0, spanData.Length - counter).ToArray();
             }
 
-            if (_mode == Modes.CTR)
+            if (_mode == Modes.Ctr)
                 ClearCtr();
         }
 
@@ -164,19 +162,6 @@ public class Crypto
             byte[] tmp = data;
             return XorBytes(BlockCipherDecrypt(data), _save);
         }
-    }
-
-    byte[] DecryptCtr(byte[] data)
-    {
-        if (_iv == null)
-        {
-            GenerateIv();
-            GenerateNonce();
-            _iv = CreateIvNonce();
-            return XorBytes(data, BlockCipherEncrypt(_iv));
-        }
-
-        return XorBytes(data, BlockCipherEncrypt(_iv));
     }
 
     byte[] BlockCipherDecrypt(byte[] data)
@@ -217,13 +202,13 @@ public class Crypto
             else
                 _first = false;
 
-            if (this._mode == Modes.ECB || this._mode == Modes.CBC)
+            if (this._mode == Modes.Ecb || this._mode == Modes.Cbc)
             {
-                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.PKS7));
+                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Pks7));
             }
             else
             {
-                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.NON));
+                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Non));
             }
         }
 
@@ -250,7 +235,7 @@ public class Crypto
 
         if (isFinalBLock) //помнить про то, что нужно дополнять также и блок размером 16 
         {
-            if (padding == Padding.PKS7)
+            if (padding == Padding.Pks7)
             {
                 if (data.Length == Const.AesMsgSize)
                 {
@@ -268,29 +253,29 @@ public class Crypto
             }
         }
 
-        if (_mode == Modes.ECB)
+        if (_mode == Modes.Ecb)
         {
             result = BlockCipherEncrypt(result);
         }
 
-        if (_mode == Modes.CBC)
+        if (_mode == Modes.Cbc)
         {
             _save = EncryptCbc(result);
             result = _save;
         }
 
-        if (_mode == Modes.CFB)
+        if (_mode == Modes.Cfb)
         {
             _save = EncryptCfb(result);
             result = _save;
         }
 
-        if (_mode == Modes.OFB)
+        if (_mode == Modes.Ofb)
         {
             result = EncryptOfb(result);
         }
 
-        if (_mode == Modes.CTR)
+        if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
             IncrementAtIndex(_iv, Const.AesMsgSize - 1);
@@ -298,7 +283,7 @@ public class Crypto
 
         if (isFinalBLock)
         {
-            if (padding == Padding.NON)
+            if (padding == Padding.Non)
             {
                 return Non(result, data.Length);
             }
@@ -306,7 +291,7 @@ public class Crypto
 
         if (isFinalBLock)
         {
-            if (padding == Padding.PKS7)
+            if (padding == Padding.Pks7)
             {
                 if (data.Length == Const.AesMsgSize)
                 {
@@ -320,9 +305,6 @@ public class Crypto
 
     byte[] Pks7(byte[] data)
     {
-        if (Const.AesMsgSize > 255)
-            throw new Exception("Data length > 255 (huge length)");
-
         int oldLength = data.Length;
 
         int size = data.Length;
@@ -351,18 +333,16 @@ public class Crypto
                 GenerateIv();
             return BlockCipherEncrypt(XorBytes(data, _iv));
         }
-        else
-        {
-            return BlockCipherEncrypt(XorBytes(data, _save));
-        }
+
+        return BlockCipherEncrypt(XorBytes(data, _save));
     }
 
     byte[] EncryptCfb(byte[] data)
     {
         if (_key == null)
             throw new Exception("Cannot find key");
-        
-        if (_iv == null || _first) 
+
+        if (_iv == null || _first)
         {
             if (_iv == null)
                 GenerateIv();
@@ -378,7 +358,7 @@ public class Crypto
     {
         if (_key == null)
             throw new Exception("Cannot find key");
-        
+
         if (_iv == null || _first)
         {
             if (_iv == null)
@@ -514,7 +494,7 @@ public class Crypto
 
     public void SetMode(string mode) //указание режима шифрования
     {
-        if (mode == Modes.CTR || mode == Modes.CBC || mode == Modes.CFB || mode == Modes.ECB || mode == Modes.OFB)
+        if (mode == Modes.Ctr || mode == Modes.Cbc || mode == Modes.Cfb || mode == Modes.Ecb || mode == Modes.Ofb)
         {
             _mode = mode;
             _iv = null;
@@ -525,9 +505,7 @@ public class Crypto
             throw new Exception("You mode is not declarated");
         }
     }
-
-    //TODO change private -> public
-    //TODo something wrong with this 2 fun
+    
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
@@ -538,7 +516,7 @@ public class Crypto
         return Encoding.UTF8.GetString(data);
     }
 
-    //Utilits generate key
+    //Utilits for testing 
     public byte[] GetIv()
     {
         if (_iv == null)
