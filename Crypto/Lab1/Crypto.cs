@@ -1,3 +1,5 @@
+using System.Buffers;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -27,7 +29,7 @@ public class Const
     public const int AesIvSize = 16;
 }
 
-public class Crypto
+public sealed class Crypto : IDisposable
 {
     private string _mode = Modes.Ecb; //default value
 
@@ -39,41 +41,85 @@ public class Crypto
 
     private byte[] _save = null;
 
+    private Aes _aes = new AesCryptoServiceProvider();
+
     private bool _first = true;
 
-    public byte[] Decrypt(byte[] data, byte[] iv = null)
+    private bool _setIv = false;
+
+    public byte[] Decrypt(Span<byte> data, byte[] iv = null)
     {
-        //first 16 byte is IV vector
-        if (iv != null)
-            _iv = iv;
-
-        var spanData = new Span<byte>(data);
-        var result = new List<byte>();
-
-        _first = true;
-        int i = 0;
-        if (_mode == Modes.Ctr && iv != null)
+        var spanData = Span<byte>.Empty;
+        if (!_setIv)
         {
-            i = 1;
+            if (data.Length <= Const.AesIvSize)
+                throw new Exception("Only Iv without message");
+
+            _iv = data.Slice(0, Const.AesIvSize).ToArray();
+            spanData = data.Slice(Const.AesIvSize);
+        }
+        else
+        {
+            if (iv != null)
+                _iv = iv;
+            spanData = data;
         }
 
-        for (; i < CountOfBlocks(data.Length); i++)
+        var resultSpan = new Span<byte>();
+        _first = true;
+
+        for (int i = 0; i < CountOfBlocks(spanData.Length); i++)
         {
             _first = i == 0;
 
             if (_mode == Modes.Ecb || _mode == Modes.Cbc)
             {
-                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Pks7));
+                bool check = isEndOfArray(spanData.ToArray(), i);
+                resultSpan = Concat(resultSpan,
+                    ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(spanData.ToArray(), i), Padding.Pks7)
+                        .AsSpan());
             }
             else
             {
-                result.AddRange(ProcessBlockDecrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Non));
+                resultSpan = Concat(resultSpan, ProcessBlockDecrypt(SplitData(spanData, i),
+                    isEndOfArray(spanData.ToArray(), i),
+                    Padding.Non).AsSpan());
             }
         }
 
         _first = false;
+        return resultSpan.ToArray();
+    }
 
-        return result.ToArray();
+    Span<byte> Concat(Span<byte> span1, Span<byte> span2)
+    {
+        var newArray = new byte[span1.Length + span2.Length];
+        if (!span1.IsEmpty)
+        {
+            for (int i = 0; i < span1.Length; i++)
+            {
+                newArray[i] = span1[i];
+            }
+
+            if (!span2.IsEmpty)
+            {
+                for (int i = span1.Length, j = 0; i < span2.Length + span1.Length; i++, j++)
+                {
+                    newArray[i] = span2[j];
+                }
+            }
+
+            return newArray.AsSpan();
+        }
+        else
+        {
+            for (int i = 0; i < span2.Length; i++)
+            {
+                newArray[i] = span2[i];
+            }
+
+            return newArray.AsSpan();
+        }
     }
 
     byte[] ProcessBlockDecrypt(byte[] data, bool isFinalBLock, string padding)
@@ -87,39 +133,45 @@ public class Crypto
             {
                 if (data[Const.AesMsgSize - 1] == Const.AesMsgSize)
                 {
-                    return new List<byte>().ToArray();
+                    return new Span<byte>().ToArray();
                 }
             }
         }
 
         if (_mode == Modes.Ecb)
+        {
             result = BlockCipherDecrypt(result);
-
-        if (_mode == Modes.Cbc)
+        }
+        else if (_mode == Modes.Cbc)
         {
             result = DecryptCbc(result);
             _save = data;
         }
-
-        if (_mode == Modes.Cfb)
+        else if (_mode == Modes.Cfb)
         {
             result = EncryptCfb(result);
             _save = data;
         }
-
-        if (_mode == Modes.Ofb)
+        else if (_mode == Modes.Ofb)
             result = EncryptOfb(result);
-
-        if (_mode == Modes.Ctr)
+        else if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
             IncrementIv(_iv, Const.AesIvSize - 1);
         }
+        else
+            throw new Exception($"Unsupported mode [{_mode}]...");
+
 
         if (isFinalBLock)
         {
             if (padding == Padding.Pks7)
             {
+                if (result[Const.AesMsgSize - 1] == Const.AesMsgSize)
+                {
+                    return new Span<byte>().ToArray();
+                }
+
                 var counter = result[Const.AesMsgSize - 1];
                 var spanData = new Span<byte>(result);
                 return spanData.Slice(0, spanData.Length - counter).ToArray();
@@ -132,7 +184,6 @@ public class Crypto
         return result;
     }
 
-    //TODO delete this
     private void ClearCtr()
     {
         if (_iv == null)
@@ -155,8 +206,6 @@ public class Crypto
             return XorBytes(BlockCipherDecrypt(data), _iv);
         }
 
-        byte[] tmp = data;
-
         return XorBytes(BlockCipherDecrypt(data), _save);
     }
 
@@ -168,48 +217,45 @@ public class Crypto
             throw new Exception("Key is empty...");
 
         byte[] resultCipher = new byte[Const.AesKeySize];
-        using (Aes aes = new AesCryptoServiceProvider())
+        _aes.Mode = CipherMode.ECB;
+        _aes.Padding = PaddingMode.None;
+        using (var decryptor = _aes.CreateDecryptor(_key, new byte[Const.AesKeySize]))
         {
-            aes.Mode = CipherMode.ECB;
-            aes.Padding = PaddingMode.None;
-            using (var aesDecryptor = aes.CreateDecryptor(_key, new byte[Const.AesKeySize]))
-            {
-                resultCipher = aesDecryptor.TransformFinalBlock(data, 0, Const.AesKeySize);
-            }
+            resultCipher = decryptor.TransformFinalBlock(data, 0, Const.AesKeySize);
         }
 
         return resultCipher;
     }
 
-    public byte[] Encrypt(byte[] data, byte[] iv = null) //разбивка на блоки
+    public byte[] Encrypt(Span<byte> data, byte[] iv = null) //разбивка на блоки
     {
-        if (data == null)
+        var spanData = Span<byte>.Empty;
+        if (data.IsEmpty)
             throw new Exception("Data is empty...");
         if (iv != null)
             _iv = iv;
 
-        var spanData = new Span<byte>(data);
         var result = new List<byte>();
+        var resultSpan = new Span<byte>();
         _first = true;
         for (int i = 0; i < CountOfBlocks(data.Length); i++)
         {
-            if (i == 0) //check this
-                _first = true;
-            else
-                _first = false;
+            _first = i == 0;
 
-            if (this._mode == Modes.Ecb || this._mode == Modes.Cbc)
+            if (_mode == Modes.Ecb || _mode == Modes.Cbc)
             {
-                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Pks7));
+                resultSpan = Concat(resultSpan,
+                    ProcessBlockEncrypt(SplitData(data, i), isEndOfArray(data.ToArray(), i), Padding.Pks7).AsSpan());
             }
             else
             {
-                result.AddRange(ProcessBlockEncrypt(SplitData(spanData, i), isEndOfArray(data, i), Padding.Non));
+                resultSpan = Concat(resultSpan,
+                    ProcessBlockEncrypt(SplitData(data, i), isEndOfArray(data.ToArray(), i), Padding.Non).AsSpan());
             }
         }
 
         _first = false;
-        return result.ToArray();
+        return resultSpan.ToArray();
     }
 
     byte[] SplitData(Span<byte> data, int index)
@@ -253,29 +299,28 @@ public class Crypto
         {
             result = BlockCipherEncrypt(result);
         }
-
-        if (_mode == Modes.Cbc)
+        else if (_mode == Modes.Cbc)
         {
             _save = EncryptCbc(result);
             result = _save;
         }
-
-        if (_mode == Modes.Cfb)
+        else if (_mode == Modes.Cfb)
         {
             _save = EncryptCfb(result);
             result = _save;
         }
-
-        if (_mode == Modes.Ofb)
+        else if (_mode == Modes.Ofb)
         {
             result = EncryptOfb(result);
         }
-
-        if (_mode == Modes.Ctr)
+        else if (_mode == Modes.Ctr)
         {
             result = EncryptCtr(result);
             IncrementIv(_iv, Const.AesMsgSize - 1);
         }
+        else
+            throw new Exception($"Unsupported mode [{_mode}]...");
+
 
         if (isFinalBLock)
         {
@@ -298,6 +343,7 @@ public class Crypto
 
         return result;
     }
+
 
     byte[] Pks7(byte[] data)
     {
@@ -419,10 +465,11 @@ public class Crypto
 
     void GenerateIv()
     {
-        using (var myRj = new AesCryptoServiceProvider())
+        byte[] iv = new byte[Const.AesIvSize];
+        using (var rngCsp = new RNGCryptoServiceProvider())
         {
-            myRj.GenerateIV();
-            this._iv = myRj.IV;
+            rngCsp.GetBytes(iv);
+            _iv = iv;
         }
     }
 
@@ -489,6 +536,11 @@ public class Crypto
         }
     }
 
+    public void SetIV(bool choice)
+    {
+        _setIv = choice;
+    }
+
     public byte[] MsgToByte(string msg) // translate string msg to byte[] msg
     {
         return Encoding.UTF8.GetBytes(msg);
@@ -518,8 +570,16 @@ public class Crypto
         if (length < 0)
             throw new Exception("Length < 0 ");
         byte[] bytes = new byte[length];
-        var rng = new RNGCryptoServiceProvider();
-        rng.GetBytes(bytes);
+        using (var rng = new RNGCryptoServiceProvider())
+        {
+            rng.GetBytes(bytes);
+        }
+
         return bytes;
+    }
+
+    void IDisposable.Dispose()
+    {
+        _aes?.Dispose();
     }
 }
