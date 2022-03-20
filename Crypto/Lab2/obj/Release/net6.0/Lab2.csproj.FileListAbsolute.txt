@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/Lab2
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/Lab2.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/Lab2.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/Lab2.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/ref/Lab2.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/bin/Release/net6.0/Lab2.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/ref/Lab2.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Crypto/Lab2/obj/Release/net6.0/Lab2.genruntimeconfig.cache

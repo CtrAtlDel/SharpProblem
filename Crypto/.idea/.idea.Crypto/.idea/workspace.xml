@@ -7,47 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d28f767-a9da-47fc-8271-dd1133377ef0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab2/FixedComparator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Crypto.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/Crypto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/Crypto.deps.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/Crypto.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/Crypto.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/Crypto.runtimeconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/bin/Debug/net6.0/ref/Crypto.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Crypto.csproj.nuget.dgspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Crypto.csproj.nuget.g.props" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Crypto.csproj.nuget.g.targets" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.GlobalUsings.g.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.assets.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.csproj.CoreCompileInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.csproj.FileListAbsolute.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.genruntimeconfig.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/Crypto.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/apphost" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/Debug/net6.0/ref/Crypto.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/project.assets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/project.nuget.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto/obj/rider.project.restore.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/Crypto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/Crypto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/Lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/Lab1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/Lab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/Lab1.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/ref/Lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/bin/Debug/net6.0/ref/Lab1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/ref/Lab1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/ref/Lab1.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/Algorythm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/Algorythm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/ref/Lab2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/ref/Lab2.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +144,7 @@
       <workItem from="1645465129067" duration="28602000" />
       <workItem from="1645636764339" duration="30349000" />
       <workItem from="1647681085646" duration="46000" />
-      <workItem from="1647686067824" duration="6184000" />
+      <workItem from="1647686067824" duration="7807000" />
     </task>
     <servers />
   </component>
@@ -199,24 +167,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Lab2/Algorythm.cs</url>
-          <line>16</line>
-          <properties documentPath="$PROJECT_DIR$/Lab2/Algorythm.cs" initialLine="17" containingFunctionPresentation="method 'HappyBirthday'">
-            <startOffsets>
-              <option value="520" />
-            </startOffsets>
-            <endOffsets>
-              <option value="550" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

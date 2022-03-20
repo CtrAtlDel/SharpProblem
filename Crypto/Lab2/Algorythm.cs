@@ -1,3 +1,6 @@
+using System.Net.NetworkInformation;
+using System.Reflection;
+
 namespace lab2;
 
 public class Algorythm
@@ -8,27 +11,46 @@ public class Algorythm
             throw new Exception("Bad size for message");
 
         var map = new Dictionary<byte[], byte[]>(new FixedComparator());
+
+        var intMap = new Dictionary<int, int>();
+
+
         var shaCut = new ShaXx(size);
         map.Add(shaCut.GetHash(startArray), startArray);
-        
-        
+
 
         while (true)
         {
-            var x = ShaXx.RandomByteGenerator(shaCut.GetHash(startArray).Length);
-            var hashX = shaCut.GetHash(x);
-            
-            if (map.ContainsKey(hashX))
+            for (int i = 0; i < 5; i++)
             {
-                Console.Out.WriteLine("Collision hash: " + hashX + " First elem: " + x + " Second elem: " + map[hashX]);
-                map.TryAdd(hashX, x);
-                Console.Out.WriteLine("Size: " + map.Count);
-            }
-            else
-            {
-                map.TryAdd(hashX, x);
-                Console.Out.WriteLine("Size: " + map.Count);
+                var x = ShaXx.RandomByteGenerator(size + i);
+                var hashX = shaCut.GetHash(x);
+
+                if (map.ContainsKey(hashX))
+                {
+                    Console.Out.WriteLine("Collision hash: " + hashX + " First elem: " + x + " Second elem: " +
+                                          map[hashX]);
+                }
+                else
+                {
+                    map.Add(hashX, x);
+                }
             }
         }
+    }
+
+    public static String ByteToString(byte[] array)
+    {
+        return BitConverter.ToString(array);
+    }
+
+    public static int getNumber(byte[] bytes)
+    {
+        if (BitConverter.IsLittleEndian)
+            Array.Reverse(bytes);
+
+        int i = BitConverter.ToInt32(bytes, 0);
+
+        return i;
     }
 }
