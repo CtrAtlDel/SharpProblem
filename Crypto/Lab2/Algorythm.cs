@@ -3,20 +3,17 @@ using System.Reflection;
 
 namespace lab2;
 
-public class Algorythm
+public static class Algorythm
 {
     public static void HappyBirthday(int size, byte[] startArray)
     {
         if (size < Const.MinXx || size > Const.MaxXx)
             throw new Exception("Bad size for message");
 
-        var map = new Dictionary<byte[], byte[]>(new FixedComparator());
-
-        var intMap = new Dictionary<int, int>();
-
+        var dictionary = new Dictionary<byte[], byte[]>(new FixedComparator());
 
         var shaCut = new ShaXx(size);
-        map.Add(shaCut.GetHash(startArray), startArray);
+        dictionary.Add(shaCut.GetHash(startArray), startArray);
 
 
         while (true)
@@ -26,14 +23,15 @@ public class Algorythm
                 var x = ShaXx.RandomByteGenerator(size + i);
                 var hashX = shaCut.GetHash(x);
 
-                if (map.ContainsKey(hashX))
+                if (!dictionary.ContainsKey(hashX))
                 {
-                    Console.Out.WriteLine("Collision hash: " + hashX + " First elem: " + x + " Second elem: " +
-                                          map[hashX]);
+                    dictionary.TryAdd(hashX, x);
                 }
                 else
                 {
-                    map.Add(hashX, x);
+                    Console.Out.WriteLine("Collision hash: " + ByteToString(hashX) + " First elem: " + ByteToString(x) +
+                                          " Second elem: " +
+                                          ByteToString(dictionary[hashX]));
                 }
             }
         }
@@ -49,8 +47,6 @@ public class Algorythm
         if (BitConverter.IsLittleEndian)
             Array.Reverse(bytes);
 
-        int i = BitConverter.ToInt32(bytes, 0);
-
-        return i;
+        return BitConverter.ToInt32(bytes, 0);
     }
 }
