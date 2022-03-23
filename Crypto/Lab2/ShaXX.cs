@@ -1,4 +1,5 @@
 using System.Buffers;
+using System.Collections;
 using System.Drawing;
 using System.Security.Cryptography;
 
@@ -10,9 +11,13 @@ public class Const
     public const int MaxXx = 20;
 }
 
-public class ShaXx
+public class ShaXx : IDisposable
 {
     private readonly int _hashSize;
+
+    private RNGCryptoServiceProvider? _rng = new RNGCryptoServiceProvider();
+
+    private SHA256? _sha256 = SHA256.Create();
 
     public ShaXx(int hashSize)
     {
@@ -23,32 +28,34 @@ public class ShaXx
 
     public byte[] GetHash(byte[] array)
     {
-        using (SHA256 sha256 = SHA256.Create())
+        try
         {
-            try
-            {
-                var encryptArray = sha256.ComputeHash(array);
-                var spanArray = new Span<byte>(encryptArray);
-                return spanArray.Slice(0, _hashSize).ToArray();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Access Exception: {e.Message}");
-            }
+            var encryptArray = _sha256.ComputeHash(array);
+            var spanArray = new Span<byte>(encryptArray);
+            return spanArray.Slice(0, _hashSize).ToArray();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Access Exception: {e.Message}");
         }
 
         return null;
     }
 
-    public static byte[] RandomByteGenerator(int length)
+    public byte[] RandomByteGenerator(int length)
     {
         if (length < 0)
             throw new Exception("Length < 0 ");
         byte[] bytes = new byte[length];
-        using (var rng = new RNGCryptoServiceProvider())
-        {
-            rng.GetBytes(bytes);
-        }
+
+        _rng.GetBytes(bytes);
         return bytes;
+    }
+
+
+    void IDisposable.Dispose()
+    {
+        _rng?.Dispose();
+        _sha256?.Dispose();
     }
 }

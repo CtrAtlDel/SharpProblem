@@ -6,7 +6,8 @@
         {
             var size = 5;
             var sizeConst = 15;
-            var randomArray = ShaXx.RandomByteGenerator(size);
+            var shaXX = new ShaXx(sizeConst);
+            var randomArray = shaXX.RandomByteGenerator(size);
             Algorythm.HappyBirthday(sizeConst, randomArray);
         }
     }

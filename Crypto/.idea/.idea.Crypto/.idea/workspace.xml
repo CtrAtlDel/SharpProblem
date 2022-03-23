@@ -10,12 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab2/Algorythm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/Algorythm.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab2/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/ref/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/ref/Lab2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/ShaXX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/ShaXX.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,6 +140,7 @@
       <workItem from="1645636764339" duration="30349000" />
       <workItem from="1647681085646" duration="46000" />
       <workItem from="1647686067824" duration="9669000" />
+      <workItem from="1648032578951" duration="2163000" />
     </task>
     <servers />
   </component>

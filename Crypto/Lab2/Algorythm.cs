@@ -20,7 +20,7 @@ public static class Algorythm
         {
             for (int i = 0; i < 5; i++)
             {
-                var x = ShaXx.RandomByteGenerator(size + i);
+                var x = shaCut.RandomByteGenerator(size + i);
                 var hashX = shaCut.GetHash(x);
 
                 if (!dictionary.ContainsKey(hashX))
