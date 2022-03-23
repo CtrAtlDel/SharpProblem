@@ -1,5 +1,7 @@
+using System.Drawing;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace lab2;
 
@@ -7,8 +9,8 @@ public static class Algorythm
 {
     public static void HappyBirthday(int size, byte[] startArray)
     {
-        if (size < Const.MinXx || size > Const.MaxXx)
-            throw new Exception("Bad size for message");
+        // if (size < Const.MinXx || size > Const.MaxXx)
+        //     throw new Exception("Bad size for message");
 
         var dictionary = new Dictionary<byte[], byte[]>(new FixedComparator());
 
@@ -34,6 +36,17 @@ public static class Algorythm
                                           ByteToString(dictionary[hashX]));
                 }
             }
+        }
+    }
+
+
+    public static void PrintDictionary(Dictionary<byte[], byte[]> dictionary)
+    {
+        foreach (var VARIABLE in dictionary)
+        {
+            // Console.Out.WriteLine("Collision hash: " + ByteToString() +
+            //                       " Second elem: " +
+            //                       ByteToString(dictionary[hashX]));
         }
     }
 

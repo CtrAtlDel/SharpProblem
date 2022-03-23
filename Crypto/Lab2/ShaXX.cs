@@ -21,8 +21,8 @@ public class ShaXx : IDisposable
 
     public ShaXx(int hashSize)
     {
-        if (hashSize < Const.MinXx || hashSize > Const.MaxXx)
-            throw new Exception("Bad size for message");
+        // if (hashSize < Const.MinXx || hashSize > Const.MaxXx)
+        //     throw new Exception("Bad size for message");
         _hashSize = hashSize;
     }
 
@@ -32,6 +32,7 @@ public class ShaXx : IDisposable
         {
             var encryptArray = _sha256.ComputeHash(array);
             var spanArray = new Span<byte>(encryptArray);
+            
             return spanArray.Slice(0, _hashSize).ToArray();
         }
         catch (Exception e)
@@ -40,6 +41,17 @@ public class ShaXx : IDisposable
         }
 
         return null;
+    }
+
+    private uint getBitSize(byte[] array)
+    { 
+        //get 15-20 bit from array
+      
+        var bits = new BitArray(array);
+        // var spanBit = new Span<BitArray>(bits);
+        
+        uint size = 5;
+        return size;
     }
 
     public byte[] RandomByteGenerator(int length)

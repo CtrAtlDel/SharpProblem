@@ -512,7 +512,7 @@ public sealed class Crypto : IDisposable
     {
         if (key.Length == Const.AesKeySize)
         {
-            this._key = key;
+            _key = key;
             _iv = null;
             _save = null;
         }
