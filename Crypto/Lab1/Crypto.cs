@@ -235,7 +235,6 @@ public sealed class Crypto : IDisposable
         if (iv != null)
             _iv = iv;
 
-        var result = new List<byte>();
         var resultSpan = new Span<byte>();
         _first = true;
         for (int i = 0; i < CountOfBlocks(data.Length); i++)

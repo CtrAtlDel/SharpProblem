@@ -16,7 +16,41 @@ public class Mac : IDisposable
 
         _key = key;
     }
-    
+
+    public byte[] OMac(byte[] data)
+    {
+        return null;
+    }
+
+    public byte[] TruncatedMac(byte[] data) 
+    {
+        return null;
+    }
+
+    public byte[] HMac(byte[] data)
+    {
+        return null;
+    }
+
+    public void MacAddBlock(byte[] dataBlock)
+    {
+    }
+
+    public byte[] MacFinalize()
+    {
+        return null;
+    }
+
+    public byte[] ComputeMac(byte[] data)
+    {
+        return null;
+    }
+
+    bool VerifyMac(byte[] data, byte[] tag)
+    {
+        return true;
+    }
+
     byte[] BlockCipherEncrypt(byte[] data)
     {
         if (_key == null)
