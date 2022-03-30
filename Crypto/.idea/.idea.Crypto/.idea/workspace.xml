@@ -8,25 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d28f767-a9da-47fc-8271-dd1133377ef0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Lab3/Cipher.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crypto.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Crypto.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/obj/Debug/net6.0/Lab1.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/Algorythm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/Algorythm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/ShaXX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/ShaXX.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Debug/net6.0/ref/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/bin/Release/net6.0/ref/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Debug/net6.0/ref/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/Lab2.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/ref/Lab2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/obj/Release/net6.0/ref/Lab2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab3/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +160,7 @@
       <workItem from="1647686067824" duration="9669000" />
       <workItem from="1648032578951" duration="8229000" />
       <workItem from="1648108076626" duration="2509000" />
-      <workItem from="1648626484709" duration="306000" />
+      <workItem from="1648626484709" duration="1052000" />
     </task>
     <servers />
   </component>
