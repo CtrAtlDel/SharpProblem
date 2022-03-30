@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 namespace lab3;
 
-public class Cipher : IDisposable
+public class Mac : IDisposable
 {
     private Aes? _aes = new AesCryptoServiceProvider();
 

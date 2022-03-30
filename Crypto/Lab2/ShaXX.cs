@@ -32,7 +32,6 @@ public class ShaXx : IDisposable
         {
             var encryptArray = _sha256.ComputeHash(array);
             var spanArray = new Span<byte>(encryptArray);
-            var bitsArray = ShaBitsConver(encryptArray);
             return spanArray.Slice(0, _hashSize).ToArray();
         }
         catch (Exception e)

@@ -8,9 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d28f767-a9da-47fc-8271-dd1133377ef0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab3/Cipher.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab3/Sha256.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Crypto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab3/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab2/ShaXX.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab2/ShaXX.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab3/Cipher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab3/Mac.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +161,7 @@
       <workItem from="1647686067824" duration="9669000" />
       <workItem from="1648032578951" duration="8229000" />
       <workItem from="1648108076626" duration="2509000" />
-      <workItem from="1648626484709" duration="1052000" />
+      <workItem from="1648626484709" duration="1818000" />
     </task>
     <servers />
   </component>
@@ -189,13 +190,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Lab2/ShaXX.cs</url>
-          <line>47</line>
+          <line>46</line>
           <properties documentPath="$PROJECT_DIR$/Lab2/ShaXX.cs" initialLine="47" containingFunctionPresentation="method 'ShaBitsConver'">
             <startOffsets>
-              <option value="1124" />
+              <option value="1067" />
             </startOffsets>
             <endOffsets>
-              <option value="1166" />
+              <option value="1109" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="9" />
