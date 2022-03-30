@@ -7,8 +7,8 @@ namespace lab2;
 
 public class Const
 {
-    public const int MinXx = 15;
-    public const int MaxXx = 20;
+    public const int MinXx = 1;
+    public const int MaxXx = 4;
 }
 
 public class ShaXx : IDisposable
@@ -21,8 +21,8 @@ public class ShaXx : IDisposable
 
     public ShaXx(int hashSize)
     {
-        // if (hashSize < Const.MinXx || hashSize > Const.MaxXx)
-        //     throw new Exception("Bad size for message");
+        if (hashSize < Const.MinXx || hashSize > Const.MaxXx)
+            throw new Exception("Bad size for message");
         _hashSize = hashSize;
     }
 
@@ -32,7 +32,7 @@ public class ShaXx : IDisposable
         {
             var encryptArray = _sha256.ComputeHash(array);
             var spanArray = new Span<byte>(encryptArray);
-            
+            var bitsArray = ShaBitsConver(encryptArray);
             return spanArray.Slice(0, _hashSize).ToArray();
         }
         catch (Exception e)
@@ -43,15 +43,10 @@ public class ShaXx : IDisposable
         return null;
     }
 
-    private uint getBitSize(byte[] array)
-    { 
-        //get 15-20 bit from array
-      
-        var bits = new BitArray(array);
-        // var spanBit = new Span<BitArray>(bits);
-        
-        uint size = 5;
-        return size;
+    public byte[] ShaBitsConver(byte[] encryptBytes)
+    {
+        var bitArray = new BitArray(encryptBytes);
+        return null;
     }
 
     public byte[] RandomByteGenerator(int length)

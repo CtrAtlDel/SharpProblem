@@ -8,8 +8,8 @@ namespace lab2
     {
         public static void Main(string[] args)
         {
-            var size = 3; //size in bytes
-            var sizeOfWord = 5;
+            var size = 4; //size in bytes
+            var sizeOfWord = 4;
             var shaXX = new ShaXx(size);
             var randomArray = shaXX.RandomByteGenerator(sizeOfWord);
             Algorythm.HappyBirthday(size,randomArray);
