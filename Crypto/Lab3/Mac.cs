@@ -51,18 +51,18 @@ public class Mac : IDisposable
         return true;
     }
 
-    byte[] BlockCipherEncrypt(byte[] data)
+    byte[] BlockCipherEncrypt(byte[] key,byte[] data)
     {
-        if (_key == null)
+        if (key == null)
             throw new Exception("Key is null");
 
-        if (this._key.Length == 0)
+        if (key.Length == 0)
             throw new Exception("Key is empty");
         
         var resultCipher = new byte[Const.AesKeySize];
 
         _aes.Mode = CipherMode.ECB;
-        using (var aesEncryptor = _aes.CreateEncryptor(this._key, new byte[Const.AesKeySize]))
+        using (var aesEncryptor = _aes.CreateEncryptor(key, new byte[Const.AesKeySize]))
         {
             aesEncryptor.TransformBlock(data, 0, Const.AesKeySize, resultCipher, 0);
         }
