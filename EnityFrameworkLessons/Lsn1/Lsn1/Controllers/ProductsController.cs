@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Lsn1.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,16 +28,41 @@ public class ProductsController : Controller
             return NotFound(); // ERROR 404
         }
 
-        return Ok(product); 
+        return Ok(product);
     }
-    
+
     //Delete method
-    [HttpGet("{id}")]
+    [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
         products.Remove(products.SingleOrDefault(p => p.Id == id));
-        return Ok();
+        return Ok(new {message = "Deleted successfully"});
     }
+
+    
+    // Id геенерация
+    private int NextProductid => products.Count() == 0 ? 1 : products.Max(x => x.Id) + 1;
+
+    [HttpGet("GetNextProductId")] // проверка будет: /api/GetNextProductId/
+    public int GetNextProductId()
+    {
+        return NextProductid;
+    }
+    
+    [HttpPost]
+    public IActionResult Post(Product product)
+    {   
+        // Валидация товара согласно модели
+        if (ModelState.IsValid) // не прошли проверу, [required]  не зря помечали ))
+        {
+            return BadRequest();
+        }
+        product.Id = NextProductid;
+        products.Add(product);
+        return CreatedAtAction(nameof(Get), new {id = product.Id}, product);
+    }
+    
+
 
     // [Route("/api/[controller]")]
     // public IActionResult Index()
