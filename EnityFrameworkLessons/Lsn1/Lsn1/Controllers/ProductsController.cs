@@ -61,9 +61,11 @@ public class ProductsController : Controller
         products.Add(product);
         return CreatedAtAction(nameof(Get), new {id = product.Id}, product);
     }
+
+    [HttpPost("AddProduct")]
+    public IActionResult PostBody([FromBody] Product product) => Post(product);
+
     
-
-
     // [Route("/api/[controller]")]
     // public IActionResult Index()
     // {
