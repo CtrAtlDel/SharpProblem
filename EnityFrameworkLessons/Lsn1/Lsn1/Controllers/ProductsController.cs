@@ -39,7 +39,7 @@ public class ProductsController : Controller
         return Ok(new {message = "Deleted successfully"});
     }
 
-    
+
     // Id геенерация
     private int NextProductid => products.Count() == 0 ? 1 : products.Max(x => x.Id) + 1;
 
@@ -48,15 +48,16 @@ public class ProductsController : Controller
     {
         return NextProductid;
     }
-    
+
     [HttpPost]
     public IActionResult Post(Product product)
-    {   
+    {
         // Валидация товара согласно модели
-        if (ModelState.IsValid) // не прошли проверу, [required]  не зря помечали ))
+        if (!ModelState.IsValid) // не прошли проверу, [required]  не зря помечали ))
         {
             return BadRequest();
         }
+
         product.Id = NextProductid;
         products.Add(product);
         return CreatedAtAction(nameof(Get), new {id = product.Id}, product);
@@ -65,7 +66,26 @@ public class ProductsController : Controller
     [HttpPost("AddProduct")]
     public IActionResult PostBody([FromBody] Product product) => Post(product);
 
-    
+    [HttpPut]
+    public IActionResult Put(Product product)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+        
+        var storedProduct = products.SingleOrDefault(p => p.Id == product.Id);
+        if (storedProduct == null) 
+            return NotFound();
+        storedProduct.Name = product.Name;
+        storedProduct.Price = product.Price;
+        
+        return Ok(storedProduct);
+    }
+
+    [HttpPut]
+    public IActionResult PutBody([FromBody] Product product) => Put(product);
+
     // [Route("/api/[controller]")]
     // public IActionResult Index()
     // {
