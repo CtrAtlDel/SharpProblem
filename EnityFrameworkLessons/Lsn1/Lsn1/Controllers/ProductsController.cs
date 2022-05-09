@@ -49,6 +49,7 @@ public class ProductsController : Controller
         return NextProductid;
     }
 
+    //Create or delete
     [HttpPost]
     public IActionResult Post(Product product)
     {
@@ -66,6 +67,8 @@ public class ProductsController : Controller
     [HttpPost("AddProduct")]
     public IActionResult PostBody([FromBody] Product product) => Post(product);
 
+    
+    //Update
     [HttpPut]
     public IActionResult Put(Product product)
     {
@@ -83,7 +86,7 @@ public class ProductsController : Controller
         return Ok(storedProduct);
     }
 
-    [HttpPut]
+    [HttpPut("UpdateProduct")]
     public IActionResult PutBody([FromBody] Product product) => Put(product);
 
     // [Route("/api/[controller]")]
