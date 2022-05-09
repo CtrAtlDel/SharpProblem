@@ -29,6 +29,14 @@ public class ProductsController : Controller
 
         return Ok(product); 
     }
+    
+    //Delete method
+    [HttpGet("{id}")]
+    public IActionResult Delete(int id)
+    {
+        products.Remove(products.SingleOrDefault(p => p.Id == id));
+        return Ok();
+    }
 
     // [Route("/api/[controller]")]
     // public IActionResult Index()
