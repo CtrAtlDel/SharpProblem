@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lsn1.Controllers;
 
+[Route("/api/[controller]")]
 public class ProductsController : Controller
 {
     private static List<Product> products = new List<Product>(new[]
@@ -14,7 +15,20 @@ public class ProductsController : Controller
 
     [HttpGet]
     public IEnumerable<Product> Get() => products;
-    
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var product =
+            products.SingleOrDefault(p => p.Id == id); // бежит по товару, проверяет предикат, соответствует ли id
+
+        if (product == null)
+        {
+            return NotFound(); // ERROR 404
+        }
+
+        return Ok(product); 
+    }
 
     // [Route("/api/[controller]")]
     // public IActionResult Index()
