@@ -15,7 +15,11 @@ public class ProductsController : Controller
     });
 
     [HttpGet]
-    public IEnumerable<Product> Get() => products;
+    // public IEnumerable<Product> Get() => products;
+    public IEnumerable<Product> Get()
+    {
+        return products;
+    }
 
     [HttpGet("{id}")]
     public IActionResult Get(int id)
