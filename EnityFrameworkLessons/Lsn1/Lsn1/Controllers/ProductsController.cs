@@ -53,7 +53,7 @@ public class ProductsController : Controller
         return NextProductid;
     }
 
-    //Create or delete
+    //Create
     [HttpPost]
     public IActionResult Post(Product product)
     {

@@ -4,7 +4,48 @@
     <projectFile>Algorithm/Algorithm.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bfaee26-34d2-454a-a5e2-4edbf9a0a86f" name="Changes" comment="" />
+    <list default="true" id="9bfaee26-34d2-454a-a5e2-4edbf9a0a86f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/Telegram.Bot.Extensions.Polling.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/Telegram.Bot.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/TestBot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/TestBot.deps.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/TestBot.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/TestBot.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/TestBot.runtimeconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/bin/Debug/net6.0/ref/TestBot.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.AssemblyInfoInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.GlobalUsings.g.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.assets.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.csproj.CopyComplete" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.genruntimeconfig.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/TestBot.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/apphost" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/Debug/net6.0/ref/TestBot.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/TestBot.csproj.nuget.dgspec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/TestBot.csproj.nuget.g.props" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/TestBot.csproj.nuget.g.targets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/project.assets.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/project.nuget.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/project.packagespec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bots/TestBot/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Algorithm/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Algorithm/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Algorithm/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Algorithm/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Algorithm/obj/Debug/net6.0/Algorithm.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Algorithm/obj/Debug/net6.0/Algorithm.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/Controllers/ProductsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/Controllers/ProductsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/bin/Debug/net6.0/Lsn1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/bin/Debug/net6.0/Lsn1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/bin/Debug/net6.0/Lsn1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/bin/Debug/net6.0/Lsn1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/Debug/net6.0/Lsn1.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/Debug/net6.0/Lsn1.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/Debug/net6.0/Lsn1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/Debug/net6.0/Lsn1.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/../EnityFrameworkLessons/Lsn1/Lsn1/obj/staticwebassets.pack.sentinel" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +99,10 @@
       <option name="presentableId" value="Default" />
       <updated>1651398222372</updated>
       <workItem from="1651398225914" duration="74000" />
+      <workItem from="1652454323007" duration="6209000" />
+      <workItem from="1652510765881" duration="1442000" />
+      <workItem from="1652862087887" duration="786000" />
+      <workItem from="1653028717176" duration="5000" />
     </task>
     <servers />
   </component>
@@ -65,7 +110,7 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

@@ -1,0 +1,15 @@
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/Algorithm
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/Algorithm.deps.json
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/Algorithm.runtimeconfig.json
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/Algorithm.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/ref/Algorithm.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/bin/Debug/net6.0/Algorithm.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.csproj.AssemblyReference.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.AssemblyInfoInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.AssemblyInfo.cs
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.csproj.CoreCompileInputs.cache
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/ref/Algorithm.dll
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.pdb
+/Users/ivankvasov/gitSharp/SharpProblem/Algorithm/Algorithm/obj/Debug/net6.0/Algorithm.genruntimeconfig.cache

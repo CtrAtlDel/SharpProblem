@@ -1,3 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Algorithm;
 
-Console.WriteLine("Hello, World!");
+public static class Algorithm
+{
+    public static void Main()
+    {
+        
+    }
+}
